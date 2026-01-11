@@ -4,7 +4,8 @@ import Home from "../../pages/Home/Home";
 import Products from "../../pages/Products/Products";
 import Cart from "../../pages/Cart/Cart";
 import Contact from "../../pages/Contact/Contact";
-import Privacity from "../../pages/Privacy/Privacity";
+import Privacy from "../../pages/Privacy/Privacy";
+import Login from "../../pages/Auth/Login";
 
 export default function AppRouter() {
   return (
@@ -16,7 +17,8 @@ export default function AppRouter() {
             <Route path="/cart" element={<Cart />}/>
             <Route path="/cart" element={<Cart />}/>
             <Route path="/contact" element={<Contact />}/>
-            <Route path="/privacity" element={<Privacity />}/>
+            <Route path="/privacy" element={<Privacy />}/>
+            <Route path="/login" element={<Login />}/>
           </Route>
       </Routes>
     </BrowserRouter>
