@@ -1,0 +1,15 @@
+.nav {
+  display: flex;
+  gap: 16px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.active {
+  font-weight: 600;
+  color: #0043c0;
+  text-decoration: none;
+}
