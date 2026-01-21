@@ -1,7 +1,9 @@
-import { ProductCard } from "../../components/ProductCard";
-import type { ProductResponseDTO } from "../../types/api";
+import { Hero } from "../components/Hero";
+import { Categories } from "../components/Categories";
+import { FeaturedProducts } from "../components/FeaturedProducts";
+import type { ProductResponseDTO } from "../types/api";
 
-const allProducts: ProductResponseDTO[] = [
+const mockProducts: ProductResponseDTO[] = [
   {
     productId: 1,
     name: "Zapatillas Urban Classic White",
@@ -124,23 +126,12 @@ const allProducts: ProductResponseDTO[] = [
   },
 ];
 
-export default function Products() {
+export default function Home() {
   return (
-    <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
-          Todos los productos
-        </h1>
-        <p className="text-sm text-gray-500">
-          Explora nuestra colección completa de zapatillas
-        </p>
-      </header>
-
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {allProducts.map((product) => (
-          <ProductCard key={product.productId} product={product} />
-        ))}
-      </div>
+    <div className="space-y-12">
+      <Hero />
+      <Categories />
+      <FeaturedProducts products={mockProducts} />
     </div>
   );
 }
