@@ -1,0 +1,1415 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "VEXA E-COMMERCE REST API",
+      "description": "This is the official VEXA Ecommerce REST API.",
+      "contact": {
+        "name": "ayoubMO19",
+        "url": "https://github.com/ayoubMO19",
+        "email": "ayoubmorghiouhda@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org"
+      },
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "https://e-commerce-backend-lny2.onrender.com",
+        "description": "Generated server url"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Auth",
+        "description": "Autenticación y gestión de sesión"
+      },
+      {
+        "name": "Users",
+        "description": "Gestión del perfil de usuario"
+      },
+      {
+        "name": "Products",
+        "description": "Consulta de productos"
+      },
+      {
+        "name": "Orders",
+        "description": "Gestión de pedidos"
+      },
+      {
+        "name": "Cart",
+        "description": "Carrito de compra"
+      },
+      {
+        "name": "Payments",
+        "description": "Pagos con Stripe"
+      },
+      {
+        "name": "Admin",
+        "description": "Operaciones administrativas"
+      }
+    ],
+    "paths": {
+      "/api/categories/{id}": {
+        "get": {
+          "tags": [
+            "Categories"
+          ],
+          "summary": "Obtener una categoría por id",
+          "description": "Obtener una categoría por id",
+          "operationId": "getCategoryById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Categoría obtenida exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CategoriesResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Actualizar una categoría",
+          "description": "Actualizar una categoría",
+          "operationId": "updateCategory",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Categoría actualizada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CategoriesResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Eliminar una categoría",
+          "description": "Eliminar una categoría",
+          "operationId": "deleteCategory",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Categoría eliminada exitosamente"
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/cart/update": {
+        "put": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Actualizar cantidad de producto del carrito del user logueado",
+          "description": "Actualizar cantidad de producto del carrito del user loguead",
+          "operationId": "updateQuantity",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartUpdateRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Cantidad de Product actualizado en Cart exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CartResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/products": {
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Obtener productos",
+          "description": "Obtener todos los productos del sistema",
+          "operationId": "getAllProducts",
+          "responses": {
+            "200": {
+              "description": "Products obtenidos exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Crear un nuevo producto",
+          "description": "Crear un nuevo producto en el sistema",
+          "operationId": "createProduct",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Producto creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/payments/create-intent": {
+        "post": {
+          "tags": [
+            "Payments"
+          ],
+          "summary": "(STRIPE) - Crear nuevo intento de pago",
+          "description": "Crear un nuevo intento de pago de stripe",
+          "operationId": "createIntent",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentIntentRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "PaymentIntent creado con éxito exitosamente",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/orders": {
+        "get": {
+          "tags": [
+            "Orders"
+          ],
+          "summary": "Obtener orders del User logueado",
+          "description": "Obtener todas las orders del user logueado",
+          "operationId": "getOrders",
+          "responses": {
+            "200": {
+              "description": "Orders obtenidas exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Orders"
+          ],
+          "summary": "Crear order para User logueado",
+          "description": "Crear order para el user logueado usando su carrito",
+          "operationId": "createOrder",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Order creada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/categories": {
+        "get": {
+          "tags": [
+            "Categories"
+          ],
+          "summary": "Obtener todas las categorías",
+          "description": "Obtener todas las categorías",
+          "operationId": "getAllCategories",
+          "responses": {
+            "200": {
+              "description": "Categorías obtenidas exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CategoriesResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Crear una nueva categoría",
+          "description": "Crear una nueva categoría",
+          "operationId": "createCategory",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Categoría creada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CategoriesResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/cart/add": {
+        "post": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Agregar producto al carrito del user logueado",
+          "description": "Agregar producto al carrito del user logueado",
+          "operationId": "addToCart",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartAddRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Product agregado al Cart exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CartResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/auth/register": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Registar un nuevo User",
+          "description": "Registra un nuevo User en el ecommerce",
+          "operationId": "register",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Usuario registrado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/auth/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Login en el sistema",
+          "description": "Loguearse en el sistema con usuario existente",
+          "operationId": "login",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario logueado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/auth/forgot-password": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Recuperación de password",
+          "description": "Recuperar password olvidada utilizando el email",
+          "operationId": "forgotPassword",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Email de recuperación de password enviado exitosamente"
+            }
+          }
+        }
+      },
+      "/api/users/{userId}": {
+        "patch": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Actualizar usuario por id",
+          "description": "Actualizar un usuario indicando su id y sus nuevos datos",
+          "operationId": "updateUserById",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/users/me": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Obtener perfil",
+          "description": "Obtener el perfil del user logueado",
+          "operationId": "getMyProfile",
+          "responses": {
+            "200": {
+              "description": "Usuario obtenido exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Eliminar perfil",
+          "description": "Eliminar el perfil del user logueado",
+          "operationId": "deleteMyProfile",
+          "responses": {
+            "204": {
+              "description": "Usuario Eliminado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "patch": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Actualizar perfil",
+          "description": "Actualizar el perfil del user logueado",
+          "operationId": "updateMyProfile",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/products/{id}": {
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Obtener producto por id",
+          "description": "Obtener producto por id",
+          "operationId": "getProductById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Producto obtenido exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Eliminar un producto",
+          "description": "Eliminar un producto en el sistema",
+          "operationId": "deleteProduct",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Producto eliminado exitosamente"
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "patch": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Actualizar un producto",
+          "description": "Actualizar un producto del sistema",
+          "operationId": "updateProduct",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProductRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Producto actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/orders/{id}/status": {
+        "patch": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Actualizar el status de una Order específica",
+          "description": "Actualizar el status de uan Order específica",
+          "operationId": "updateOrderStatus",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrderRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Order status actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/orders/{id}/cancel": {
+        "patch": {
+          "tags": [
+            "Orders"
+          ],
+          "summary": "Cancelar una Order específica",
+          "description": "Cancelar una Order específica actualizando su status a canceled",
+          "operationId": "cancelMyOrder",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Order cancelada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/users": {
+        "get": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Obtener todos los usuarios del sistema",
+          "description": "Retorna todos los usuarios del sistema",
+          "operationId": "getAllUsers",
+          "responses": {
+            "200": {
+              "description": "Usuarios obtenidos exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/users/{id}": {
+        "get": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Obtener usuario por id",
+          "description": "Retorna un usuario indicando su id",
+          "operationId": "getUserById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario obtenido exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Admin"
+          ],
+          "summary": "(ADMIN) - Eliminar user por id",
+          "description": "Eliminar un usuario indicando su id",
+          "operationId": "deleteUserById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Usuario eliminado exitosamente"
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/cart": {
+        "get": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Obtener carrito del user logueado",
+          "description": "Obtener carrito del user logueado",
+          "operationId": "getCart",
+          "responses": {
+            "200": {
+              "description": "Cart obtenido exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CartResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      },
+      "/api/cart/delete": {
+        "delete": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Eliminar producto del carrito del user logueado",
+          "description": "Eliminar producto del carrito del user logueado",
+          "operationId": "removeProduct",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartDeleteProductRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Product eliminado de Cart exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CartResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer Authentication": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "CategoriesRequestDTO": {
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "CategoriesResponseDTO": {
+          "type": "object",
+          "properties": {
+            "categoryId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "CartUpdateRequestDTO": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "CartItemDTO": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "name": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "total": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "CartResponseDTO": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CartItemDTO"
+              }
+            },
+            "totalItems": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPrice": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "ProductRequestDTO": {
+          "required": [
+            "description",
+            "name",
+            "price"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": {
+              "type": "string"
+            },
+            "urlImage": {
+              "type": "string"
+            },
+            "stock": {
+              "maximum": 9999,
+              "type": "integer",
+              "format": "int32"
+            },
+            "categoryId": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "ProductResponseDTO": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "name": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": {
+              "type": "string"
+            },
+            "urlImage": {
+              "type": "string"
+            },
+            "stock": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "PaymentIntentRequestDTO": {
+          "required": [
+            "orderId"
+          ],
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "OrdersRequestDTO": {
+          "required": [
+            "shippingAddress"
+          ],
+          "type": "object",
+          "properties": {
+            "shippingAddress": {
+              "maxLength": 200,
+              "minLength": 5,
+              "type": "string"
+            }
+          }
+        },
+        "AuthResponseDTO": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            },
+            "user": {
+              "$ref": "#/components/schemas/UserResponseDTO"
+            }
+          }
+        },
+        "UserResponseDTO": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "name": {
+              "type": "string"
+            },
+            "surname": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "hasWelcomeDiscount": {
+              "type": "boolean"
+            }
+          }
+        },
+        "CartAddRequestDTO": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "RegisterRequestDTO": {
+          "required": [
+            "email",
+            "name",
+            "password",
+            "surname"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "maxLength": 50,
+              "minLength": 2,
+              "type": "string"
+            },
+            "surname": {
+              "maxLength": 50,
+              "minLength": 2,
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "maxLength": 2147483647,
+              "minLength": 6,
+              "type": "string"
+            }
+          }
+        },
+        "RegisterResponseDTO": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "user": {
+              "$ref": "#/components/schemas/UserResponseDTO"
+            },
+            "emailSent": {
+              "type": "boolean"
+            }
+          }
+        },
+        "LoginRequestDTO": {
+          "required": [
+            "email",
+            "password"
+          ],
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "ForgotPasswordRequestDTO": {
+          "required": [
+            "email"
+          ],
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "UpdateUserRequestDTO": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "maxLength": 50,
+              "minLength": 2,
+              "type": "string"
+            },
+            "surname": {
+              "maxLength": 50,
+              "minLength": 2,
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "hasWelcomeDiscount": {
+              "type": "boolean"
+            }
+          }
+        },
+        "UpdateProductRequestDTO": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "maxLength": 50,
+              "minLength": 2,
+              "type": "string"
+            },
+            "price": {
+              "minimum": 0.0,
+              "exclusiveMinimum": false,
+              "type": "number",
+              "format": "double"
+            },
+            "description": {
+              "maxLength": 2147483647,
+              "minLength": 2,
+              "type": "string"
+            },
+            "urlImage": {
+              "type": "string"
+            },
+            "stock": {
+              "maximum": 9999,
+              "type": "integer",
+              "format": "int32"
+            },
+            "categoryId": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "UpdateOrderRequestDTO": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "PAID",
+                "SHIPPED",
+                "DELIVERED",
+                "CANCELLED"
+              ]
+            },
+            "shippingAddress": {
+              "type": "string"
+            },
+            "paymentIntentId": {
+              "type": "string"
+            },
+            "paidAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "CartDeleteProductRequestDTO": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "Bearer Authentication": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
