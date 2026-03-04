@@ -4,6 +4,8 @@ import type {
   RegisterRequestDTO,
   AuthResponseDTO,
   RegisterResponseDTO,
+  ProductResponseDTO,
+  CategoriesResponseDTO,
 } from "../types/api";
 
 const API_BASE_URL = "https://e-commerce-backend-lny2.onrender.com";
@@ -63,6 +65,28 @@ export const authService = {
     const response = await api.post<RegisterResponseDTO>(
       "/api/auth/register",
       userData
+    );
+    return response.data;
+  },
+};
+
+// Servicios de productos
+export const productService = {
+  getAll: async (): Promise<ProductResponseDTO[]> => {
+    const response = await api.get<ProductResponseDTO[] | ProductResponseDTO>(
+      "/api/products"
+    );
+    const data = response.data;
+    return Array.isArray(data) ? data : [data];
+  },
+};
+
+
+// Servicios de categorías
+export const categoriesService = {
+  getAll: async (): Promise<CategoriesResponseDTO[]> => {
+    const response = await api.get<CategoriesResponseDTO[]>(
+      "/api/categories"
     );
     return response.data;
   },
