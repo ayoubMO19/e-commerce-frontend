@@ -2,6 +2,9 @@ import { useState } from "react";
 import type { ProductResponseDTO } from "../types/api";
 import { ShoppingCart, Check } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../utils/notifications";
 
 interface ProductCardProps {
   product: ProductResponseDTO;
@@ -10,8 +13,23 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
+    // Si no esta logueado no se añade
+    if (!isAuthenticated) {
+      notify.warn("Acceso requerido", {
+        description: "Inicia sesión para gestionar tu carrito.",
+        action: {
+          label: "Iniciar Sesión",
+          onClick: () => navigate("/login")
+        }
+      });
+      return;
+    }
+
+    // Si no hay stock no se añade
     if (product.stock <= 0) return;
 
     addToCart(product);
@@ -21,6 +39,9 @@ export function ProductCard({ product }: ProductCardProps) {
     setTimeout(() => {
       setIsAdded(false);
     }, 2000);
+
+    // Si todo va bien
+    notify.success("¡Producto añadido!");
   };
 
   return (

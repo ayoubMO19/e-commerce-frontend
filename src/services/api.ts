@@ -6,6 +6,10 @@ import type {
   RegisterResponseDTO,
   ProductResponseDTO,
   CategoriesResponseDTO,
+  CartResponseDTO,
+  CartAddRequestDTO,
+  CartUpdateRequestDTO,
+  CartDeleteProductRequestDTO
 } from "../types/api";
 
 const API_BASE_URL = "https://e-commerce-backend-lny2.onrender.com";
@@ -40,8 +44,15 @@ api.interceptors.response.use(
       // Token expirado o inválido
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_user");
-      // Redirigir al login si no estamos ya ahí
-      if (window.location.pathname !== "/login") {
+
+      // Definimos qué rutas SÍ requieren login obligatorio
+      const privateRoutes = ["/cart", "/profile", "/checkout", "/orders"];
+      const currentPath = window.location.pathname;
+
+      // Solo redirigimos si está en una ruta que NO puede ser pública
+      const isPrivateRoute = privateRoutes.some(route => currentPath.startsWith(route));
+
+      if (isPrivateRoute && currentPath !== "/login") {
         window.location.href = "/login";
       }
     }
@@ -90,4 +101,32 @@ export const categoriesService = {
     );
     return response.data;
   },
+};
+
+export const cartService = {
+  // Obtener carrito del usuario logueado
+  getCart: async (): Promise<CartResponseDTO> => {
+    const response = await api.get<CartResponseDTO>("/api/cart");
+    return response.data;
+  },
+
+  // Agregar producto (POST)
+  addToCart: async (data: CartAddRequestDTO): Promise<CartResponseDTO> => {
+    const response = await api.post<CartResponseDTO>("/api/cart/add", data);
+    return response.data;
+  },
+
+  // Actualizar cantidad (PUT)
+  updateQuantity: async (data: CartUpdateRequestDTO): Promise<CartResponseDTO> => {
+    const response = await api.put<CartResponseDTO>("/api/cart/update", data);
+    return response.data;
+  },
+
+  // Eliminar producto (DELETE con body)
+  removeFromCart: async (productId: number): Promise<CartResponseDTO> => {
+    const response = await api.delete<CartResponseDTO>("/api/cart/delete", {
+      data: { productId } as CartDeleteProductRequestDTO
+    });
+    return response.data;
+  }
 };

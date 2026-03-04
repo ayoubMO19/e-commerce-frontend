@@ -1,178 +1,121 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import type { ProductResponseDTO, CartItem } from "../types/api";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+import type { ProductResponseDTO, CartItem, CartResponseDTO } from "../types/api";
+import { cartService } from "../services/api";
+import { useAuth } from "../hooks/useAuth";
+import { notify } from "../utils/notifications";
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: ProductResponseDTO) => void;
-  removeFromCart: (productId: number) => void;
-  updateQuantity: (productId: number, newQuantity: number) => void;
+  addToCart: (product: ProductResponseDTO) => Promise<void>;
+  removeFromCart: (productId: number) => Promise<void>;
+  updateQuantity: (productId: number, newQuantity: number) => Promise<void>;
   clearCart: () => void;
   cartTotal: number;
   cartCount: number;
+  isLoading: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = "vexa_cart";
-
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated } = useAuth();
 
-  // Cargar carrito desde localStorage al montar
-  useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        setCartItems(parsedCart);
-      }
-    } catch (error) {
-      console.error("Error loading cart from localStorage:", error);
-    } finally {
-      setIsInitialized(true);
-    }
+  // Mapeo estricto desde el DTO del Swagger
+  const updateLocalStateWithBackend = useCallback((remoteCart: CartResponseDTO) => {
+    console.log(`productos de cart items: ${JSON.stringify(remoteCart)}`);
+    setCartItems(remoteCart.items.map(item => ({
+      productId: item.productId,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      // Como el CartItemDTO no trae imagen ni stock, usamos valores por defecto
+      // o podrías ampliar tu DTO en Java para incluirlos.
+      urlImage: "", 
+      stock: 999 
+    })));
   }, []);
 
-  // Guardar carrito en localStorage cuando cambie
+  // Cargar carrito solo cuando el usuario está autenticado
   useEffect(() => {
-    if (isInitialized) {
-      try {
-        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
-      } catch (error) {
-        console.error("Error saving cart to localStorage:", error);
-      }
-    }
-  }, [cartItems, isInitialized]);
-
-  // Sincronizar con backend (comentado para implementación futura)
-  // useEffect(() => {
-  //   if (isInitialized && cartItems.length > 0) {
-  //     const syncCart = async () => {
-  //       try {
-  //         const token = localStorage.getItem("auth_token");
-  //         if (!token) return;
-  //
-  //         const response = await fetch(
-  //           "https://e-commerce-backend-lny2.onrender.com/api/cart/add",
-  //           {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //             body: JSON.stringify({
-  //               productId: cartItems[cartItems.length - 1].productId,
-  //               quantity: cartItems[cartItems.length - 1].quantity,
-  //             }),
-  //           }
-  //         );
-  //
-  //         if (!response.ok) {
-  //           throw new Error("Failed to sync cart with backend");
-  //         }
-  //       } catch (error) {
-  //         console.error("Error syncing cart with backend:", error);
-  //       }
-  //     };
-  //
-  //     syncCart();
-  //   }
-  // }, [cartItems, isInitialized]);
-
-  const addToCart = (product: ProductResponseDTO) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find(
-        (item) => item.productId === product.productId
-      );
-
-      if (existingItem) {
-        // Si ya existe, incrementar cantidad (respetando stock)
-        const newQuantity = Math.min(
-          existingItem.quantity + 1,
-          product.stock
-        );
-        return prevItems.map((item) =>
-          item.productId === product.productId
-            ? { ...item, quantity: newQuantity }
-            : item
-        );
-      } else {
-        // Si no existe, añadir nuevo item
-        return [
-          ...prevItems,
-          {
-            productId: product.productId,
-            name: product.name,
-            price: product.price,
-            quantity: 1,
-            urlImage: product.urlImage,
-            stock: product.stock,
-          },
-        ];
-      }
-    });
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.productId !== productId)
-    );
-  };
-
-  const updateQuantity = (productId: number, newQuantity: number) => {
-    if (newQuantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
-
-    setCartItems((prevItems) =>
-      prevItems.map((item) => {
-        if (item.productId === productId) {
-          // Respetar el stock máximo
-          const quantity = Math.min(newQuantity, item.stock);
-          return { ...item, quantity };
+    if (isAuthenticated) {
+      const fetchCart = async () => {
+        try {
+          setIsLoading(true);
+          const data = await cartService.getCart();
+          updateLocalStateWithBackend(data);
+        } catch (error) {
+          console.error("Error fetching cart:", error);
+        } finally {
+          setIsLoading(false);
         }
-        return item;
-      })
-    );
+      };
+      fetchCart();
+    } else {
+      // Si se desloguea, limpiamos el estado inmediatamente
+      setCartItems([]);
+    }
+  }, [isAuthenticated, updateLocalStateWithBackend]);
+
+  const addToCart = async (product: ProductResponseDTO) => {
+    // Ya no comprobamos isAuthenticated aquí porque el botón ya está bloqueado,
+    // pero lo dejamos como "safety check"
+    if (!isAuthenticated) return;
+
+    try {
+      const response = await cartService.addToCart({ 
+        productId: product.productId, 
+        quantity: 1 
+      });
+      updateLocalStateWithBackend(response);
+      notify.success("Producto añadido al carrito");
+    } catch {
+      notify.error("No se pudo añadir el producto");
+    }
+  };
+
+  const removeFromCart = async (productId: number) => {
+    try {
+      const response = await cartService.removeFromCart(productId);
+      updateLocalStateWithBackend(response);
+    } catch {
+      notify.error("Error al eliminar producto");
+    }
+  };
+
+  const updateQuantity = async (productId: number, newQuantity: number) => {
+    if (newQuantity <= 0) return removeFromCart(productId);
+
+    try {
+      const response = await cartService.updateQuantity({ productId, quantity: newQuantity });
+      updateLocalStateWithBackend(response);
+    } catch {
+      notify.error("Error al actualizar cantidad");
+    }
   };
 
   const clearCart = () => {
     setCartItems([]);
+    // Nota: El Swagger no tiene un endpoint DELETE /api/cart/clear, 
+    // así que solo limpiamos el estado local.
   };
 
-  const cartTotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  const cartCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const cartTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        cartTotal,
-        cartCount,
-      }}
-    >
+    <CartContext.Provider value={{ 
+      cartItems, addToCart, removeFromCart, updateQuantity, 
+      clearCart, cartTotal, cartCount, isLoading 
+    }}>
       {children}
     </CartContext.Provider>
   );
 }
 
-export function useCart() {
+export const useCart = () => {
   const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
+  if (!context) throw new Error("useCart must be used within CartProvider");
   return context;
-}
+};

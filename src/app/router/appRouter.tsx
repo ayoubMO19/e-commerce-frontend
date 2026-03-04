@@ -8,10 +8,12 @@ import Privacy from "../../pages/Privacy/Privacy";
 import Login from "../../pages/Auth/Login";
 import Register from "../../pages/Auth/Register";
 import { ProtectedRoute } from "../../components/ProtectedRoute";
+import { Toaster } from 'sonner';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" richColors visibleToasts={1} />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
