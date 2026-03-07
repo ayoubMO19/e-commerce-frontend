@@ -128,5 +128,10 @@ export const cartService = {
       data: { productId } as CartDeleteProductRequestDTO
     });
     return response.data;
-  }
+  },
+
+  clearCart: async (): Promise<CartResponseDTO> => {
+    const { data } = await api.delete<CartResponseDTO>('/api/cart/clear');
+    return data;
+  },
 };

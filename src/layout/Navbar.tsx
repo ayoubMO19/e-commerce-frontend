@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { ShoppingCart, User, LogOut } from "lucide-react";
 import Logo from "../assets/logo.png";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
 const navLinkBase =

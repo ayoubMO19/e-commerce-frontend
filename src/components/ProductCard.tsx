@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ProductResponseDTO } from "../types/api";
 import { ShoppingCart, Check } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../utils/notifications";

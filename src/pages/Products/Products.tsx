@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import type { ProductResponseDTO } from "../../types/api";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../../hooks/useCart";
 import { productService } from "../../services/api";
 
 type GadgetCategory = "Audio" | "Gaming" | "Wearables" | "Accesorios";

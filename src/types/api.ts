@@ -62,6 +62,8 @@ export interface CartItemDTO {
   price: number;
   quantity: number;
   total: number;
+  urlImage: string;
+  stock: number;
 }
 
 export interface CartResponseDTO {
