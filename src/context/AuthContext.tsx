@@ -5,6 +5,7 @@ import {
   } from "react";
 import type { UserResponseDTO, LoginRequestDTO, RegisterRequestDTO } from "../types/api";
 import { authService } from "../services/api";
+import { handleAuthError } from "../utils/authErrorHandler";
 
 interface AuthContextType {
 user: UserResponseDTO | null;
@@ -39,9 +40,10 @@ const [user, setUser] = useState<UserResponseDTO | null>(() => {
 
 const [isLoading, setIsLoading] = useState(false);
 
+// Función para iniciar sesión
 const login = async (credentials: LoginRequestDTO) => {
-    setIsLoading(true);
-    try {
+  setIsLoading(true);
+  try {
     const response = await authService.login(credentials);
     
     localStorage.setItem(AUTH_TOKEN_KEY, response.token);
@@ -49,30 +51,30 @@ const login = async (credentials: LoginRequestDTO) => {
     
     setToken(response.token);
     setUser(response.user);
-    
-    window.location.href = "/";
-    } catch (error: unknown) {
-    // Solución al error de 'any'
-    const errorMessage = error instanceof Error ? error.message : "Error inesperado";
-    throw new Error(errorMessage);
-    } finally {
+  } catch (error: unknown) {
+    handleAuthError(error, "No se pudo iniciar sesión.");
+  } finally {
     setIsLoading(false);
-    }
+  }
 };
 
+// Función para registrar un nuevo usuario
 const register = async (userData: RegisterRequestDTO) => {
-    setIsLoading(true);
-    try {
+  setIsLoading(true);
+  try {
+    // Registro en el backend
     await authService.register(userData);
+    
+    // Login automático tras registro exitoso
     await login({ email: userData.email, password: userData.password });
-    } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Error al registrar";
-    throw new Error(errorMessage);
-    } finally {
+  } catch (error: unknown) {
+    handleAuthError(error, "Error al crear la cuenta.");
+  } finally {
     setIsLoading(false);
-    }
+  }
 };
 
+// Función para cerrar sesión
 const logout = () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_USER_KEY);

@@ -41,20 +41,8 @@ api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
-      // Token expirado o inválido
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_user");
-
-      // Definimos qué rutas SÍ requieren login obligatorio
-      const privateRoutes = ["/cart", "/profile", "/checkout", "/orders"];
-      const currentPath = window.location.pathname;
-
-      // Solo redirigimos si está en una ruta que NO puede ser pública
-      const isPrivateRoute = privateRoutes.some(route => currentPath.startsWith(route));
-
-      if (isPrivateRoute && currentPath !== "/login") {
-        window.location.href = "/login";
-      }
     }
     return Promise.reject(error);
   }

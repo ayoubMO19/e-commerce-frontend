@@ -1,62 +1,74 @@
 import type { CategoriesResponseDTO } from "../types/api";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { categoriesService } from "../services/api";
 import { useEffect, useState } from "react";
+import { Tag } from "lucide-react";
 
 export function Categories() {
   const [categories, setCategories] = useState<CategoriesResponseDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const currentCategory = searchParams.get("category");
 
   useEffect(() => {
     let isMounted = true;
-
     const loadCategories = async () => {
       try {
         const data = await categoriesService.getAll();
-        if (isMounted) {
-          setCategories(data);
-        }
-      } catch {
-        if (isMounted) {
-          setError("No se han podido cargar las categorías.");
-        }
+        if (isMounted) setCategories(data);
+      } catch (error) {
+        console.error("Error al cargar categorías", error);
       } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+        if (isMounted) setIsLoading(false);
       }
     };
-
     loadCategories();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, []);
 
   return (
-    <section className="space-y-6">
-      <h2 className="text-lg font-semibold tracking-tight text-gray-900">
-        Categorías
-      </h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    <section className="py-4">
+      <div className="flex items-center gap-2 mb-4">
+        <Tag className="h-4 w-4 text-gray-400" />
+        <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500">
+          Categorías
+        </h2>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
         {isLoading ? (
-          <div className="text-sm text-gray-500">Cargando categorías...</div>
-        ) : error ? (
-          <div className="text-sm text-red-500">{error}</div>
+          Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-9 w-24 animate-pulse rounded-full bg-gray-100" />
+          ))
         ) : (
-          categories.map((category) => (
-          <Link
-            key={category.categoryId}
-            to={`/products?category=${category.categoryId}`}
-            className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:border-gray-900 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-              <h3 className="text-center text-2xl font-bold text-black p-4">{category.name}</h3>
-            </div>
-          </Link>
-        )))}
+          <>
+            {/* Opción para ver todos */}
+            <Link
+              to="/products"
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                !currentCategory 
+                ? "bg-black text-white shadow-md" 
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              Todas
+            </Link>
+
+            {categories.map((category) => (
+              <Link
+                key={category.categoryId}
+                to={`/products?category=${category.categoryId}`}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                  currentCategory === String(category.categoryId)
+                    ? "bg-black text-white shadow-md"
+                    : "bg-white border border-gray-200 text-gray-600 hover:border-black hover:text-black shadow-sm"
+                }`}
+              >
+                {category.name}
+              </Link>
+            ))}
+          </>
+        )}
       </div>
     </section>
   );
