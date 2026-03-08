@@ -1,164 +1,12 @@
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
-import type { ProductResponseDTO } from "../../types/api";
-import { useCart } from "../../context/CartContext";
-
-type GadgetCategory = "Audio" | "Gaming" | "Wearables" | "Accesorios";
-
-type GadgetProduct = ProductResponseDTO & {
-  category: GadgetCategory;
-};
-
-const GADGETS_DATA: GadgetProduct[] = [
-  {
-    productId: 1,
-    name: "Auriculares Inalámbricos Noise Pro",
-    price: 199.99,
-    description:
-      "Audio de alta fidelidad con cancelación activa de ruido y hasta 36h de autonomía.",
-    urlImage:
-      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=900&h=700&fit=crop",
-    stock: 24,
-    category: "Audio",
-  },
-  {
-    productId: 2,
-    name: "Smartwatch Titanium Series",
-    price: 349.0,
-    description:
-      "Reloj inteligente con cuerpo de titanio, pantalla always-on y métricas avanzadas de salud.",
-    urlImage:
-      "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=900&h=700&fit=crop",
-    stock: 15,
-    category: "Wearables",
-  },
-  {
-    productId: 3,
-    name: "Micrófono Studio USB X",
-    price: 159.5,
-    description:
-      "Micrófono de condensador con patrón cardioide ideal para streaming y podcasts.",
-    urlImage:
-      "https://images.unsplash.com/photo-1485579149621-3123dd979885?w=900&h=700&fit=crop",
-    stock: 18,
-    category: "Gaming",
-  },
-  {
-    productId: 4,
-    name: "Base de Carga Wireless 3-en-1",
-    price: 89.99,
-    description:
-      "Carga simultánea para smartphone, smartwatch y auriculares en una sola base.",
-    urlImage:
-      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=900&h=700&fit=crop",
-    stock: 32,
-    category: "Accesorios",
-  },
-  {
-    productId: 5,
-    name: "Auriculares Over-Ear Studio Black",
-    price: 249.0,
-    description:
-      "Diseño circumaural con drivers de 40mm y perfil de sonido neutro para mezcla profesional.",
-    urlImage:
-      "https://images.unsplash.com/photo-1518444028781-eba9f3ccd885?w=900&h=700&fit=crop",
-    stock: 12,
-    category: "Audio",
-  },
-  {
-    productId: 6,
-    name: "Gaming Mouse UltraLight RGB",
-    price: 79.99,
-    description:
-      "Sensor óptico de 26K DPI, diseño ultraligero y personalización RGB avanzada.",
-    urlImage:
-      "https://images.unsplash.com/photo-1585079542156-2755d9c8a094?w=900&h=700&fit=crop",
-    stock: 40,
-    category: "Gaming",
-  },
-  {
-    productId: 7,
-    name: "Teclado Mecánico Low Profile Wireless",
-    price: 189.0,
-    description:
-      "Switches mecánicos de bajo perfil, conexión multi-dispositivo y chasis de aluminio.",
-    urlImage:
-      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=900&h=700&fit=crop",
-    stock: 21,
-    category: "Gaming",
-  },
-  {
-    productId: 8,
-    name: "Smart Band Fitness Carbon",
-    price: 69.99,
-    description:
-      "Pulsera fitness con seguimiento continuo de actividad, sueño y notificaciones inteligentes.",
-    urlImage:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=900&h=700&fit=crop",
-    stock: 55,
-    category: "Wearables",
-  },
-  {
-    productId: 9,
-    name: "Stand Magnético para Smartphone",
-    price: 49.5,
-    description:
-      "Soporte de aluminio con base magnética y ajuste de ángulo para escritorio.",
-    urlImage:
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=900&h=700&fit=crop",
-    stock: 60,
-    category: "Accesorios",
-  },
-  {
-    productId: 10,
-    name: "Auriculares In-Ear ANC Compact",
-    price: 149.0,
-    description:
-      "Diseño intraauricular compacto con cancelación activa de ruido y modo transparencia.",
-    urlImage:
-      "https://images.unsplash.com/photo-1518443895911-3c038d89c1ab?w=900&h=700&fit=crop",
-    stock: 27,
-    category: "Audio",
-  },
-  {
-    productId: 11,
-    name: "Dock USB‑C Pro Hub",
-    price: 129.99,
-    description:
-      "Hub USB‑C con HDMI 4K, USB‑A, lector de tarjetas y carga pass-through de 100W.",
-    urlImage:
-      "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=900&h=700&fit=crop",
-    stock: 19,
-    category: "Accesorios",
-  },
-  {
-    productId: 12,
-    name: "Monitor Portable 15.6\" 4K",
-    price: 399.99,
-    description:
-      "Monitor portátil 4K con panel IPS mate, conexión USB‑C y funda-soporte incluida.",
-    urlImage:
-      "https://images.unsplash.com/photo-1517059224940-d4af9eec41e5?w=900&h=700&fit=crop",
-    stock: 8,
-    category: "Gaming",
-  },
-];
-
-const CATEGORY_FILTERS: GadgetCategory[] = [
-  "Audio",
-  "Gaming",
-  "Wearables",
-  "Accesorios",
-];
+import { useEffect, useMemo, useState } from "react";
+import { Search, SlidersHorizontal, PackageX } from "lucide-react";
+import type { ProductResponseDTO, CategoriesResponseDTO } from "../../types/api";
+import { useCart } from "../../hooks/useCart";
+import { productService, categoriesService } from "../../services/api";
 
 type PriceRangeId = "all" | "0-100" | "100-200" | "200plus";
 
-const PRICE_RANGES: {
-  id: PriceRangeId;
-  label: string;
-  min: number;
-  max: number;
-}[] = [
+const PRICE_RANGES: { id: PriceRangeId; label: string; min: number; max: number; }[] = [
   { id: "all", label: "Todos", min: 0, max: Infinity },
   { id: "0-100", label: "Hasta 100 €", min: 0, max: 100 },
   { id: "100-200", label: "100 € - 200 €", min: 100, max: 200 },
@@ -168,89 +16,125 @@ const PRICE_RANGES: {
 export default function Products() {
   const { addToCart } = useCart();
 
+  // Estados de datos
+  const [products, setProducts] = useState<ProductResponseDTO[]>([]);
+  const [categories, setCategories] = useState<CategoriesResponseDTO[]>([]);
+  
+  // Estados de UI
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Estados de Filtros
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<GadgetCategory[]>(
-    []
-  );
-  const [selectedPriceRange, setSelectedPriceRange] =
-    useState<PriceRangeId>("all");
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRangeId>("all");
 
-  const handleCategoryToggle = (category: GadgetCategory) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  // Carga inicial de Productos y Categorías Reales
+  useEffect(() => {
+    let isMounted = true;
 
-  const filteredGadgets = useMemo(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const [productsData, categoriesData] = await Promise.all([
+          productService.getAll(),
+          categoriesService.getAll()
+        ]);
+
+        if (isMounted) {
+          setProducts(productsData);
+          setCategories(categoriesData);
+        }
+      } catch {
+        if (isMounted) setError("Error al conectar con el servidor.");
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    loadData();
+    return () => { isMounted = false; };
+  }, []);
+
+  // Lógica de filtrado
+  const filteredProducts = useMemo(() => {
     const normalizedSearch = searchTerm.toLowerCase().trim();
-    const priceRange = PRICE_RANGES.find(
-      (range) => range.id === selectedPriceRange
-    )!;
+    const priceRange = PRICE_RANGES.find(r => r.id === selectedPriceRange)!;
 
-    return GADGETS_DATA.filter((product) => {
-      const matchesSearch =
-        !normalizedSearch ||
+    return products.filter((product) => {
+      const matchesSearch = !normalizedSearch || 
         product.name.toLowerCase().includes(normalizedSearch) ||
-        product.description.toLowerCase().includes(normalizedSearch) ||
-        product.category.toLowerCase().includes(normalizedSearch);
+        product.description.toLowerCase().includes(normalizedSearch);
 
-      const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(product.category);
+      const matchesCategory = selectedCategoryIds.length === 0 || 
+        selectedCategoryIds.includes(product.categoryId);
 
-      const matchesPrice =
-        product.price >= priceRange.min && product.price <= priceRange.max;
+      const matchesPrice = product.price >= priceRange.min && product.price <= priceRange.max;
 
       return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [searchTerm, selectedCategories, selectedPriceRange]);
+  }, [searchTerm, selectedCategoryIds, selectedPriceRange, products]);
+
+  const toggleCategory = (id: number) => {
+    setSelectedCategoryIds(prev => 
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
+  };
+
+  if (error) return <div className="p-10 text-center text-red-500">{error}</div>;
+
+  // TODO: ELIMINAR CUANDO SE INTEGRE EN BACKEND
+  // Función para obtener el nombre de la categoría según el ID
+  const getCategoryName = (id: number) => {
+    return categories.find(cat => cat.categoryId === id)?.name || "General";
+  };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[260px,minmax(0,1fr)]">
-      {/* Sidebar de filtros */}
-      <aside className="lg:sticky lg:top-24 lg:self-start">
-        <div className="space-y-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-soft">
+    <div className="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-8">
+      {/* Sidebar de Filtros */}
+      <aside className="lg:sticky lg:top-24 lg:self-start space-y-6">
+        <div className="flex items-center gap-2 px-1">
+          <SlidersHorizontal className="h-4 w-4 text-gray-400" />
+          <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500">Filtros</h2>
+        </div>
+
+        <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm space-y-8">
+          {/* Categorías Dinámicas */}
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-gray-500">
-              Categories
-            </h2>
-            <div className="space-y-2">
-              {CATEGORY_FILTERS.map((category) => (
-                <label
-                  key={category}
-                  className="flex cursor-pointer items-center justify-between gap-2 rounded-xl px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+            <h3 className="text-xs font-bold text-gray-400 uppercase">Categorías</h3>
+            <div className="flex flex-col gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat.categoryId}
+                  onClick={() => toggleCategory(cat.categoryId)}
+                  className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm transition-all ${
+                    selectedCategoryIds.includes(cat.categoryId)
+                      ? "bg-black text-white"
+                      : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                  }`}
                 >
-                  <span>{category}</span>
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
-                    checked={selectedCategories.includes(category)}
-                    onChange={() => handleCategoryToggle(category)}
-                  />
-                </label>
+                  {cat.name}
+                  {selectedCategoryIds.includes(cat.categoryId) && <div className="h-1.5 w-1.5 rounded-full bg-white" />}
+                </button>
               ))}
             </div>
           </section>
 
+          {/* Rango de Precios */}
           <section className="space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-gray-500">
-              Price Range
-            </h2>
-            <div className="space-y-2">
+            <h3 className="text-xs font-bold text-gray-400 uppercase">Precio</h3>
+            <div className="grid grid-cols-1 gap-2">
               {PRICE_RANGES.map((range) => (
                 <button
                   key={range.id}
-                  type="button"
                   onClick={() => setSelectedPriceRange(range.id)}
-                  className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm transition ${
+                  className={`px-3 py-2 text-left text-sm rounded-xl transition-all ${
                     selectedPriceRange === range.id
-                      ? "bg-gray-900 text-white"
-                      : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      ? "ring-2 ring-black font-semibold text-black"
+                      : "text-gray-500 hover:bg-gray-50"
                   }`}
                 >
-                  <span>{range.label}</span>
+                  {range.label}
                 </button>
               ))}
             </div>
@@ -258,105 +142,112 @@ export default function Products() {
         </div>
       </aside>
 
-      {/* Contenido principal */}
-      <section className="space-y-6">
-        <header className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
-            Gadget store
-          </h1>
-          <p className="text-sm text-gray-500">
-            Descubre nuestra selección de tecnología premium para tu día a día.
-          </p>
-        </header>
-
-        {/* Buscador */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="relative w-full max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+      {/* Listado de Productos */}
+      <main className="space-y-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <header>
+            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">VEXA Store</h1>
+            <p className="text-gray-500 mt-1">Explora productos actualizados en tiempo real.</p>
+          </header>
+          
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Buscar por nombre, categoría..."
+              placeholder="Buscar..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-full border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition focus:border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+              className="w-full rounded-2xl border border-gray-200 bg-white py-2 pl-10 pr-4 text-sm focus:border-black focus:ring-0 transition-all shadow-sm"
             />
           </div>
-          <p className="hidden text-xs text-gray-500 sm:block">
-            {filteredGadgets.length}{" "}
-            {filteredGadgets.length === 1 ? "producto" : "productos"}
-          </p>
         </div>
 
-        {/* Grid de productos */}
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {filteredGadgets.map((product) => (
-            <article
-              key={product.productId}
-              className="flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex-1 space-y-4 p-5">
-                <div className="relative overflow-hidden rounded-2xl bg-gray-50 p-6">
+        {isLoading ? (
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-80 animate-pulse rounded-3xl bg-gray-100" />)}
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {filteredProducts.map((product) => (
+              <article
+                key={product.productId}
+                className="group flex flex-col bg-white rounded-3xl border border-gray-100 p-4 shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-300"
+              >
+                {/* Imagen con badges de estado y categoría */}
+                <div className="relative aspect-square rounded-2xl bg-gray-50 overflow-hidden mb-4">
                   <img
                     src={product.urlImage}
                     alt={product.name}
-                    className="mx-auto h-40 w-full max-w-[220px] object-contain"
+                    className="h-full w-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
                   />
-                </div>
-
-                <div className="space-y-2">
-                  <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                    {product.category}
+                  
+                  {/* Badge de Categoría Dinámico */}
+                  <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 text-[10px] font-bold px-2.5 py-1 rounded-lg border border-gray-100 shadow-sm z-10">
+                    {getCategoryName(product.categoryId)}
                   </span>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {product.name}
-                  </h3>
-                  <p className="text-xs text-gray-500 line-clamp-2">
-                    {product.description}
-                  </p>
-                </div>
-              </div>
 
-              <div className="border-t border-gray-100 px-5 py-4">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-base font-semibold text-gray-900">
-                    {product.price.toLocaleString("es-ES", {
-                      style: "currency",
-                      currency: "EUR",
-                    })}
-                  </p>
-                  {product.stock > 0 ? (
-                    <p className="text-xs text-gray-500">
-                      Stock: {product.stock}
-                    </p>
-                  ) : (
-                    <p className="text-xs font-medium text-red-500">
-                      Sin stock
-                    </p>
+                  {/* Badge de Stock Crítico */}
+                  {product.stock <= 5 && product.stock > 0 && (
+                    <span className="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg uppercase shadow-sm z-10">
+                      Últimas unidades
+                    </span>
+                  )}
+
+                  {/* Overlay de Agotado */}
+                  {product.stock === 0 && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-20">
+                      <div className="flex flex-col items-center text-red-600">
+                        <PackageX className="h-8 w-8" />
+                        <span className="text-[10px] font-bold uppercase mt-1">Agotado</span>
+                      </div>
+                    </div>
                   )}
                 </div>
 
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    disabled={product.stock <= 0}
-                    onClick={() => addToCart(product)}
-                    className="inline-flex flex-1 items-center justify-center rounded-full border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    Add to Cart
-                  </button>
-                  <button
-                    type="button"
-                    disabled={product.stock <= 0}
-                    className="inline-flex flex-1 items-center justify-center rounded-full bg-black px-3 py-2 text-xs font-semibold text-white transition hover:bg-gray-900 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    Buy Now
-                  </button>
+                {/* Detalles del Producto */}
+                <div className="flex-1 flex flex-col px-1">
+                  {/* Etiqueta de categoría superior */}
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1.5">
+                    {getCategoryName(product.categoryId)}
+                  </p>
+                  
+                  <h3 className="font-bold text-gray-900 leading-tight mb-1 group-hover:text-black transition-colors">
+                    {product.name}
+                  </h3>
+                  
+                  <p className="text-xs text-gray-500 line-clamp-2 mb-4">
+                    {product.description}
+                  </p>
+                  
+                  <div className="mt-auto pt-4 border-t border-gray-50">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xl font-black text-gray-900">
+                        {product.price.toLocaleString("es-ES", {
+                          style: "currency",
+                          currency: "EUR",
+                        })}
+                      </span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
+                        Stock: {product.stock}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => addToCart(product)}
+                        disabled={product.stock === 0}
+                        className="flex-1 bg-black text-white py-3 rounded-2xl text-xs font-bold hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-400 transition-all active:scale-95"
+                      >
+                        Añadir al carrito
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+              </article>
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 }

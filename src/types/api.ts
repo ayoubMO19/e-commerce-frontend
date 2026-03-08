@@ -5,6 +5,7 @@ export interface ProductResponseDTO {
   description: string;
   urlImage: string;
   stock: number;
+  categoryId: number;
 }
 
 export interface CategoriesResponseDTO {
@@ -51,4 +52,38 @@ export interface RegisterResponseDTO {
   message: string;
   user: UserResponseDTO;
   emailSent: boolean;
+}
+
+
+
+// Añade esto a tu archivo de interfaces
+export interface CartItemDTO {
+  productId: number;
+  name: string;
+  price: number;
+  quantity: number;
+  total: number;
+  urlImage: string;
+  stock: number;
+}
+
+export interface CartResponseDTO {
+  userId: number;
+  items: CartItemDTO[];
+  totalItems: number;
+  totalPrice: number;
+}
+
+export interface CartAddRequestDTO {
+  productId: number;
+  quantity: number;
+}
+
+export interface CartUpdateRequestDTO {
+  productId: number;
+  quantity: number;
+}
+
+export interface CartDeleteProductRequestDTO {
+  productId: number;
 }

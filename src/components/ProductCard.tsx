@@ -1,7 +1,8 @@
 import { useState } from "react";
 import type { ProductResponseDTO } from "../types/api";
 import { ShoppingCart, Check } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
+import { notify } from "../utils/notifications";
 
 interface ProductCardProps {
   product: ProductResponseDTO;
@@ -12,6 +13,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
+    // Si no hay stock no se añade
     if (product.stock <= 0) return;
 
     addToCart(product);
@@ -21,6 +23,9 @@ export function ProductCard({ product }: ProductCardProps) {
     setTimeout(() => {
       setIsAdded(false);
     }, 2000);
+
+    // Si todo va bien
+    notify.success("¡Producto añadido!");
   };
 
   return (

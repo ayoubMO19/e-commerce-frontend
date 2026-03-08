@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../../hooks/useCart";
 
 export default function Cart() {
   const {
@@ -40,7 +40,7 @@ export default function Cart() {
     );
   }
 
-  return (
+return (
     <div className="space-y-8">
       <header className="flex items-center justify-between">
         <div>
@@ -79,43 +79,71 @@ export default function Cart() {
                 />
               </div>
 
-              <div className="flex flex-1 flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-900">
-                    {item.name}
-                  </h3>
-                  <p className="mt-1 text-sm font-semibold text-gray-900">
-                    {item.price.toLocaleString("es-ES", {
-                      style: "currency",
-                      currency: "EUR",
-                    })}
-                  </p>
+              <div className="flex flex-1 flex-col"> {/* Contenedor principal sin space-y para mayor control */}
+                
+                {/* Fila superior: Nombre y Precio Unitario */}
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                      {item.name}
+                    </h3>
+                    {/* Precio Unitario */}
+                    <p className="mt-1 text-xs text-gray-500">
+                      {item.price.toLocaleString("es-ES", {
+                        style: "currency",
+                        currency: "EUR",
+                      })} / ud.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-900 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
-                    >
-                      <Minus className="h-4 w-4" />
-                    </button>
-                    <span className="w-8 text-center text-sm font-medium text-gray-900">
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                      disabled={item.quantity >= item.stock}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-900 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </button>
+                {/* Fila inferior: Controles, Stock y Precio Total de Línea */}
+                <div className="mt-auto pt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                  
+                  {/* Grupo: Controles y Info Stock */}
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-900 hover:text-gray-900 disabled:opacity-30"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+                      <span className="w-8 text-center text-sm font-semibold text-gray-900">
+                        {item.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                        disabled={item.quantity >= item.stock}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-900 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-30"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    {/* Info Stock (Ahora más compacta y separada) */}
+                    <div className="flex items-center gap-1.5 ml-0.5">
+                      <div className={`h-1.5 w-1.5 rounded-full ${
+                        item.quantity >= item.stock ? "bg-red-500" : "bg-green-500"
+                      }`} />
+                      <p className={`text-[11px] font-medium tracking-tight ${
+                        item.quantity >= item.stock ? "text-red-600" : "text-gray-500"
+                      }`}>
+                        {item.quantity >= item.stock 
+                          ? `Máx: ${item.stock}` 
+                          : item.stock < 10 
+                            ? `¡Solo ${item.stock}!` 
+                            : `En stock: ${item.stock}`}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <p className="text-sm font-semibold text-gray-900">
+                  {/* Grupo: Precio Total de Línea y Eliminar */}
+                  <div className="flex items-center justify-between gap-4 sm:ml-auto sm:justify-end sm:gap-3">
+                    {/* Precio Total de Línea */}
+                    <p className="text-base font-bold tracking-tight text-gray-950">
                       {(item.price * item.quantity).toLocaleString("es-ES", {
                         style: "currency",
                         currency: "EUR",

@@ -7,23 +7,18 @@ import Contact from "../../pages/Contact/Contact";
 import Privacy from "../../pages/Privacy/Privacy";
 import Login from "../../pages/Auth/Login";
 import Register from "../../pages/Auth/Register";
-import { ProtectedRoute } from "../../components/ProtectedRoute";
+import { Toaster } from 'sonner';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" richColors visibleToasts={1} />
       <Routes>
         <Route element={<MainLayout />}>
+          {/* Rutas Públicas */}
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          <Route
-            path="/cart"
-            element={
-              <ProtectedRoute>
-                <Cart />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/login" element={<Login />} />
