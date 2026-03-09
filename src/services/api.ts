@@ -78,6 +78,11 @@ export const productService = {
     const data = response.data;
     return Array.isArray(data) ? data : [data];
   },
+  
+  getById: async (id: string | number): Promise<ProductResponseDTO> => {
+    const response = await api.get<ProductResponseDTO>(`/api/products/${id}`);
+    return response.data;
+  },
 };
 
 

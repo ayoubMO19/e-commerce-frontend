@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Search, SlidersHorizontal, PackageX } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import type { ProductResponseDTO, CategoriesResponseDTO } from "../../types/api";
-import { useCart } from "../../hooks/useCart";
 import { productService, categoriesService } from "../../services/api";
+import { ProductCard } from "../../components/ProductCard";
 
 type PriceRangeId = "all" | "0-100" | "100-200" | "200plus";
 
@@ -14,8 +14,6 @@ const PRICE_RANGES: { id: PriceRangeId; label: string; min: number; max: number;
 ];
 
 export default function Products() {
-  const { addToCart } = useCart();
-
   // Estados de datos
   const [products, setProducts] = useState<ProductResponseDTO[]>([]);
   const [categories, setCategories] = useState<CategoriesResponseDTO[]>([]);
@@ -164,86 +162,18 @@ export default function Products() {
 
         {isLoading ? (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-80 animate-pulse rounded-3xl bg-gray-100" />)}
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="h-[450px] animate-pulse rounded-3xl bg-gray-100" />
+            ))}
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProducts.map((product) => (
-              <article
-                key={product.productId}
-                className="group flex flex-col bg-white rounded-3xl border border-gray-100 p-4 shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-300"
-              >
-                {/* Imagen con badges de estado y categoría */}
-                <div className="relative aspect-square rounded-2xl bg-gray-50 overflow-hidden mb-4">
-                  <img
-                    src={product.urlImage}
-                    alt={product.name}
-                    className="h-full w-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
-                  />
-                  
-                  {/* Badge de Categoría Dinámico */}
-                  <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 text-[10px] font-bold px-2.5 py-1 rounded-lg border border-gray-100 shadow-sm z-10">
-                    {getCategoryName(product.categoryId)}
-                  </span>
-
-                  {/* Badge de Stock Crítico */}
-                  {product.stock <= 5 && product.stock > 0 && (
-                    <span className="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg uppercase shadow-sm z-10">
-                      Últimas unidades
-                    </span>
-                  )}
-
-                  {/* Overlay de Agotado */}
-                  {product.stock === 0 && (
-                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-20">
-                      <div className="flex flex-col items-center text-red-600">
-                        <PackageX className="h-8 w-8" />
-                        <span className="text-[10px] font-bold uppercase mt-1">Agotado</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Detalles del Producto */}
-                <div className="flex-1 flex flex-col px-1">
-                  {/* Etiqueta de categoría superior */}
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1.5">
-                    {getCategoryName(product.categoryId)}
-                  </p>
-                  
-                  <h3 className="font-bold text-gray-900 leading-tight mb-1 group-hover:text-black transition-colors">
-                    {product.name}
-                  </h3>
-                  
-                  <p className="text-xs text-gray-500 line-clamp-2 mb-4">
-                    {product.description}
-                  </p>
-                  
-                  <div className="mt-auto pt-4 border-t border-gray-50">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xl font-black text-gray-900">
-                        {product.price.toLocaleString("es-ES", {
-                          style: "currency",
-                          currency: "EUR",
-                        })}
-                      </span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
-                        Stock: {product.stock}
-                      </span>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => addToCart(product)}
-                        disabled={product.stock === 0}
-                        className="flex-1 bg-black text-white py-3 rounded-2xl text-xs font-bold hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-400 transition-all active:scale-95"
-                      >
-                        Añadir al carrito
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </article>
+              <ProductCard 
+                key={product.productId} 
+                product={product} 
+                categoryName={getCategoryName(product.categoryId)} 
+              />
             ))}
           </div>
         )}
