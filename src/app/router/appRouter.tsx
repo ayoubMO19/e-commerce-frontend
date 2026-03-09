@@ -7,6 +7,7 @@ import Contact from "../../pages/Contact/Contact";
 import Privacy from "../../pages/Privacy/Privacy";
 import Login from "../../pages/Auth/Login";
 import Register from "../../pages/Auth/Register";
+import ProductDetail from "../../pages/Products/ProductDetail";
 import { Toaster } from 'sonner';
 
 export default function AppRouter() {
@@ -18,6 +19,7 @@ export default function AppRouter() {
           {/* Rutas Públicas */}
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
