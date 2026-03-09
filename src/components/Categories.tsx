@@ -1,30 +1,13 @@
-import type { CategoriesResponseDTO } from "../types/api";
 import { Link, useSearchParams } from "react-router-dom";
-import { categoriesService } from "../services/api";
-import { useEffect, useState } from "react";
 import { Tag } from "lucide-react";
+import { useCategoriesData } from "../hooks/useProductsData";
 
 export function Categories() {
-  const [categories, setCategories] = useState<CategoriesResponseDTO[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: categories = [], isLoading } = useCategoriesData();
+
   const [searchParams] = useSearchParams();
   const currentCategory = searchParams.get("category");
 
-  useEffect(() => {
-    let isMounted = true;
-    const loadCategories = async () => {
-      try {
-        const data = await categoriesService.getAll();
-        if (isMounted) setCategories(data);
-      } catch (error) {
-        console.error("Error al cargar categorías", error);
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    };
-    loadCategories();
-    return () => { isMounted = false; };
-  }, []);
 
   return (
     <section className="py-4">
