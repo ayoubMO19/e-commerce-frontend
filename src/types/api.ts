@@ -22,17 +22,16 @@ export interface CartItem {
   stock: number;
 }
 
-// Auth DTOs basados en swagger.json
 export interface LoginRequestDTO {
   email: string;
   password: string;
 }
 
 export interface RegisterRequestDTO {
-  name: string; // minLength: 2, maxLength: 50
-  surname: string; // minLength: 2, maxLength: 50
+  name: string;
+  surname: string;
   email: string;
-  password: string; // minLength: 6
+  password: string;
 }
 
 export interface UserResponseDTO {
@@ -53,10 +52,6 @@ export interface RegisterResponseDTO {
   user: UserResponseDTO;
   emailSent: boolean;
 }
-
-
-
-// Añade esto a tu archivo de interfaces
 export interface CartItemDTO {
   productId: number;
   name: string;
@@ -86,4 +81,18 @@ export interface CartUpdateRequestDTO {
 
 export interface CartDeleteProductRequestDTO {
   productId: number;
+}
+
+export interface UpdateUserRequestDTO {
+  name?: string;
+  surname?: string;
+  email?: string;
+}
+
+export interface UserResponseDTO {
+  userId: number;
+  name: string;
+  surname: string;
+  email: string;
+  hasWelcomeDiscount: boolean;
 }
