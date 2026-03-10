@@ -1,5 +1,6 @@
 import AppRouter from "./app/router/appRouter.tsx";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Creamos una instancia del cliente con configuraciones por defecto pro
 const queryClient = new QueryClient({
@@ -17,6 +18,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppRouter />
+      <SpeedInsights />
     </QueryClientProvider>
   )
 }
