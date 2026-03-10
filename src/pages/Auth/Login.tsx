@@ -118,7 +118,7 @@ export default function Login() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-gray-100 bg-gray-50/50 py-4 pl-12 pr-4 text-sm font-bold outline-none transition-all focus:border-black focus:bg-white focus:ring-4 focus:ring-black/5"
+                  className="w-full rounded-2xl border border-gray-200 py-4 pl-12 pr-4 text-sm font-bold outline-none transition-all focus:border-black bg-white focus:ring-4 focus:ring-black/5"
                   placeholder="tu@email.com"
                 />
               </div>
@@ -144,7 +144,7 @@ export default function Login() {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-gray-100 bg-gray-50/50 py-4 pl-12 pr-12 text-sm font-bold outline-none transition-all focus:border-black focus:bg-white focus:ring-4 focus:ring-black/5"
+                    className="w-full rounded-2xl border border-gray-200 py-4 pl-12 pr-12 text-sm font-bold outline-none transition-all focus:border-black bg-white focus:ring-4 focus:ring-black/5"
                     placeholder="••••••••"
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black">
