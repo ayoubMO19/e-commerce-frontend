@@ -12,6 +12,7 @@ const Contact = lazy(() => import("../../pages/Contact/Contact"));
 const Privacy = lazy(() => import("../../pages/Privacy/Privacy"));
 const Login = lazy(() => import("../../pages/Auth/Login"));
 const Register = lazy(() => import("../../pages/Auth/Register"));
+const Profile = lazy(() => import("../../pages/Profile/Profile"));
 
 // Un cargador simple para cuando se cambia de página
 const PageLoader = () => (
@@ -35,6 +36,7 @@ export default function AppRouter() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </Suspense>
