@@ -12,7 +12,7 @@
 
 ---
 
-<img src="./src/assets/e-commerce.png" width="100%" alt="VEXA Homepage Preview"/>
+<img src="./src/assets/e-commerce.png" width="70%" alt="VEXA Homepage Preview"/>
 
 ---
 
