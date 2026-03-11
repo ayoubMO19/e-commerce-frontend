@@ -7,14 +7,14 @@ import type { RegisterRequestDTO } from "../../types/api";
 export default function Register() {
   const navigate = useNavigate();
   const { register, isAuthenticated } = useAuth();
-  
+
   const [formData, setFormData] = useState<RegisterRequestDTO>({
     name: "",
     surname: "",
     email: "",
     password: "",
   });
-  
+
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +26,7 @@ export default function Register() {
     }
   }, [isAuthenticated, navigate]);
 
+  // Manejar el envío del formulario
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -47,6 +48,7 @@ export default function Register() {
     }
   };
 
+  // Manejar el cambio en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     if (error) setError("");

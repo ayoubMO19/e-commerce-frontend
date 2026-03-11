@@ -29,10 +29,10 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
 
   return (
     <article className="group relative flex flex-col bg-white rounded-3xl border border-gray-100 p-3 shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-300">
-      
+
       {/* Enlace a detalles */}
       <Link to={`/products/${product.productId}`} className="flex flex-col flex-1">
-        
+
         {/* Contenedor de Imagen */}
         <div className="relative aspect-square rounded-2xl bg-gray-50 overflow-hidden mb-3">
           <img
@@ -40,7 +40,7 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
             alt={product.name}
             className="h-full w-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
           />
-          
+
           {/* Badge de Categoría */}
           {categoryName && (
             <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[9px] font-black uppercase tracking-tighter text-gray-900 px-2 py-1 rounded-lg border border-gray-100 shadow-sm z-10">
@@ -71,7 +71,7 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
           <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
             {categoryName || "Premium Collection"}
           </p>
-          
+
           <h3 className="text-sm font-bold text-gray-900 leading-tight group-hover:text-black transition-colors line-clamp-1">
             {product.name}
           </h3>
@@ -95,11 +95,10 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0 || isAdded}
-          className={`w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-[11px] font-bold transition-all active:scale-95 ${
-            isAdded 
-              ? "bg-green-50 text-green-600" 
+          className={`w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-[11px] font-bold transition-all active:scale-95 ${isAdded
+              ? "bg-green-50 text-green-600"
               : "bg-black text-white hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-400"
-          }`}
+            }`}
         >
           {isAdded ? (
             <>

@@ -67,7 +67,6 @@ export function Navbar() {
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white shadow-lg transition-all duration-300 group-hover:rotate-12 group-hover:scale-110 group-active:scale-90">
                   <User className="h-4 w-4" />
                 </div>
-                {/* Indicador de actividad */}
                 <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-green-500" />
               </div>
             </NavLink>

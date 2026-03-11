@@ -5,8 +5,7 @@ import { useProductsData } from "../hooks/useProductsData";
 import { Loader2, AlertCircle } from "lucide-react";
 
 export default function Home() {
-  // TanStack Query se encarga de todo: 
-  // Si ya están en caché de la página de productos, data no será undefined
+  // Traer datos de productos
   const { data: products = [], isLoading, isError } = useProductsData();
 
   return (

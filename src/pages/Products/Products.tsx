@@ -5,7 +5,7 @@ import { ProductCard } from "../../components/ProductCard";
 import { useProductsData, useCategoriesData } from "../../hooks/useProductsData";
 import type { CategoriesResponseDTO } from "../../types/api";
 
-// --- TIPOS Y CONSTANTES ---
+// Tipos y constantes
 type PriceRangeId = "all" | "0-100" | "100-200" | "200plus";
 
 const PRICE_RANGES: { id: PriceRangeId; label: string; min: number; max: number }[] = [
@@ -24,7 +24,7 @@ interface FilterProps {
   setPriceFilter: (rangeId: PriceRangeId) => void;
 }
 
-// --- SUBCOMPONENTE (EXTRAÍDO FUERA PARA EVITAR ERRORES DE RENDER) ---
+// Filtro lateral
 const FilterSidebar = ({
   isLoadingCategories,
   categories,
@@ -44,11 +44,10 @@ const FilterSidebar = ({
             <button
               key={cat.categoryId}
               onClick={() => toggleCategory(cat.categoryId)}
-              className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-medium transition-all ${
-                selectedCategoryIds.includes(cat.categoryId)
+              className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-medium transition-all ${selectedCategoryIds.includes(cat.categoryId)
                   ? "bg-gray-900 text-white shadow-sm"
                   : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-              }`}
+                }`}
             >
               {cat.name}
               {selectedCategoryIds.includes(cat.categoryId) && <X className="h-3 w-3 opacity-50" />}
@@ -65,11 +64,10 @@ const FilterSidebar = ({
           <button
             key={range.id}
             onClick={() => setPriceFilter(range.id)}
-            className={`rounded-xl px-4 py-2.5 text-left text-xs font-medium transition-all ${
-              selectedPriceRange === range.id
+            className={`rounded-xl px-4 py-2.5 text-left text-xs font-medium transition-all ${selectedPriceRange === range.id
                 ? "bg-gray-100 font-bold text-gray-900"
                 : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-            }`}
+              }`}
           >
             {range.label}
           </button>
@@ -79,7 +77,7 @@ const FilterSidebar = ({
   </div>
 );
 
-// --- COMPONENTE PRINCIPAL ---
+// Componente principal
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -100,7 +98,7 @@ export default function Products() {
     const priceRange = PRICE_RANGES.find((r) => r.id === selectedPriceRange) || PRICE_RANGES[0];
 
     return products.filter((product) => {
-      const matchesSearch = !normalizedSearch || 
+      const matchesSearch = !normalizedSearch ||
         product.name.toLowerCase().includes(normalizedSearch) ||
         product.description.toLowerCase().includes(normalizedSearch);
       const matchesCategory = selectedCategoryIds.length === 0 || selectedCategoryIds.includes(product.categoryId);

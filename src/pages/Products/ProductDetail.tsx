@@ -9,7 +9,7 @@ export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  
+
   const [product, setProduct] = useState<ProductResponseDTO | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
@@ -56,7 +56,7 @@ export default function ProductDetail() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Botón Volver */}
-      <button 
+      <button
         onClick={() => navigate(-1)}
         className="mb-8 flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-black"
       >
