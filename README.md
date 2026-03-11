@@ -9,7 +9,7 @@
 **E-commerce moderno de alto rendimiento** con arquitectura modular y experiencia de usuario optimizada.
 
 **[Live Demo](https://e-commerce-frontend-mu-five.vercel.app/)** | **[Backend](https://github.com/ayoubMO19/e-commerce-backend)**
-
+<img src="./src/assets/e-commerce.png" width="100%"/>
 ## 🏗️ Arquitectura
 
 VEXA implementa una arquitectura modular basada en **React + TypeScript** con separación clara de responsabilidades:
