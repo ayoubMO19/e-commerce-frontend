@@ -18,7 +18,7 @@
 ---
 
 <div align="center">
-  <img src="./src/assets/e-commerce.png" width="80%" alt="VEXA Homepage Preview" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);"/>
+  <img src="./src/assets/ecommerce.png" width="80%" alt="VEXA Homepage Preview"/>
 </div>
 
 ---
