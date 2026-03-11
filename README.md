@@ -1,10 +1,10 @@
 # VEXA E-Commerce Frontend
-> ⚠️ **Nota:** Este proyecto se encuentra actualmente en **fase de desarrollo activo**. Algunas funcionalidades pueden estar en proceso de implementación.
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+> ⚠️ **Nota:** Este proyecto se encuentra actualmente en **fase de desarrollo activo**. Algunas funcionalidades pueden estar en proceso de implementación.
 
 **E-commerce moderno de alto rendimiento** con arquitectura modular y experiencia de usuario optimizada.
 
