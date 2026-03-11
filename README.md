@@ -1,4 +1,4 @@
-# VEXA
+# VEXA E-Commerce Frontend
 > ⚠️ **Nota:** Este proyecto se encuentra actualmente en **fase de desarrollo activo**. Algunas funcionalidades pueden estar en proceso de implementación.
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
