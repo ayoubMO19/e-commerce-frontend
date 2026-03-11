@@ -2,7 +2,7 @@ import AppRouter from "./app/router/appRouter.tsx";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-// Creamos una instancia del cliente con configuraciones por defecto pro
+// Configuración global de React Query
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

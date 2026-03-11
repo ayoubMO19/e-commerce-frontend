@@ -28,11 +28,10 @@ export function Categories() {
             {/* Opción para ver todos */}
             <Link
               to="/products"
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
-                !currentCategory 
-                ? "bg-black text-white shadow-md" 
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${!currentCategory
+                  ? "bg-black text-white shadow-md"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
             >
               Todas
             </Link>
@@ -41,11 +40,10 @@ export function Categories() {
               <Link
                 key={category.categoryId}
                 to={`/products?category=${category.categoryId}`}
-                className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
-                  currentCategory === String(category.categoryId)
+                className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${currentCategory === String(category.categoryId)
                     ? "bg-black text-white shadow-md"
                     : "bg-white border border-gray-200 text-gray-600 hover:border-black hover:text-black shadow-sm"
-                }`}
+                  }`}
               >
                 {category.name}
               </Link>
