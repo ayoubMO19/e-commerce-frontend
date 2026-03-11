@@ -11,7 +11,9 @@
 **[Live Demo](https://e-commerce-frontend-mu-five.vercel.app/)** | **[Backend](https://github.com/ayoubMO19/e-commerce-backend)**
 
 ---
+
 <img src="./src/assets/e-commerce.png" width="100%" alt="VEXA Homepage Preview"/>
+
 ---
 
 ## 🏗️ Arquitectura
