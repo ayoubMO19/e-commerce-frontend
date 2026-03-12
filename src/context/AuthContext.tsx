@@ -61,9 +61,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       await authService.register(userData);
-
-      // TODO: revisar Login automático tras registro exitoso
-      await login({ email: userData.email, password: userData.password });
     } catch (error: unknown) {
       handleAuthError(error, "Error al crear la cuenta.");
     } finally {
