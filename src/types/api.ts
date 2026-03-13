@@ -96,3 +96,29 @@ export interface UserResponseDTO {
   email: string;
   hasWelcomeDiscount: boolean;
 }
+
+export interface OrdersRequestDTO {
+  shippingAddress: string;
+}
+
+export interface OrderItemDTO {
+  productId: number;
+  productName: string;
+  quantity: number;
+  priceAtPurchase: number;
+  imageUrl: string;
+}
+export interface OrdersResponseDTO {
+  orderId: number;
+  totalPrice: number;
+  status: 'PENDING' | 'PAID' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+  shippingAddress: string;
+  paymentIntentId?: string;
+  paidAt?: string;
+  createdAt: string;
+  items: OrderItemDTO[];
+}
+
+export interface PaymentIntentRequestDTO {
+  orderId: number;
+}
