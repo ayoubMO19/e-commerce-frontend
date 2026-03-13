@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
 import { useCart } from "../../hooks/useCart";
 import { notify } from "../../utils/notifications";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Cart() {
   const {
@@ -15,7 +16,9 @@ export default function Cart() {
   } = useCart();
 
   const [isProcessing, setIsProcessing] = useState<number | null>(null);
-
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
   // Memorizamos el total para evitar recalcular en renders por estados locales (como isProcessing)
   const finalTotal = useMemo(() => {
     const shippingCost = 0;
@@ -30,6 +33,19 @@ export default function Cart() {
     } finally {
       setIsProcessing(null);
     }
+  };
+
+  // Función para manejar el checkout
+  const handleCheckout = () => {
+    if (!user) {
+      notify.info("Inicia sesión para finalizar tu compra");
+      // Guardamos la ruta actual para volver después del login si fuera necesario
+      navigate("/login", { state: { from: "/checkout" } });
+      return;
+    }
+
+    // Si está logueado, vamos directo al formulario de dirección
+    navigate("/checkout");
   };
 
   if (cartItems.length === 0) {
@@ -169,7 +185,7 @@ export default function Cart() {
               </span>
             </div>
             <button
-              onClick={() => notify.info("Pasarela de pago en desarrollo.")}
+              onClick={handleCheckout}
               className="mt-6 w-full rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white transition hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
             >
               Finalizar compra

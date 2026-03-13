@@ -12,6 +12,9 @@ import type {
   CartDeleteProductRequestDTO,
   UpdateUserRequestDTO,
   UserResponseDTO,
+  OrdersRequestDTO,
+  OrdersResponseDTO,
+  PaymentIntentRequestDTO,
 } from "../types/api";
 
 const API_BASE_URL = "https://e-commerce-backend-lny2.onrender.com";
@@ -123,4 +126,33 @@ export const userService = {
     );
     return response.data;
   },
+};
+
+export const orderService = {
+  createOrder: async (data: OrdersRequestDTO): Promise<OrdersResponseDTO> => {
+    const response = await api.post<OrdersResponseDTO>("/api/orders", data);
+    return response.data;
+  },
+  getMyOrders: async (): Promise<OrdersResponseDTO[]> => {
+    const response = await api.get<OrdersResponseDTO[]>("/api/orders");
+    console.log(`Response: ${JSON.stringify(response.data)}`);
+    return response.data;
+  },
+  cancelOrder: async (orderId: number): Promise<OrdersResponseDTO> => {
+    const response = await api.patch<OrdersResponseDTO>(`/api/orders/${orderId}`, { 
+      status: 'CANCELLED' 
+    });
+    return response.data;
+  }
+};
+
+export const paymentService = {
+  createIntent: async (orderId: number): Promise<string> => {
+    const response = await api.post<string>(
+      "/api/payments/create-intent", 
+      { orderId } as PaymentIntentRequestDTO,
+      { responseType: 'text' } 
+    );
+    return response.data;
+  }
 };
