@@ -135,7 +135,6 @@ export const orderService = {
   },
   getMyOrders: async (): Promise<OrdersResponseDTO[]> => {
     const response = await api.get<OrdersResponseDTO[]>("/api/orders");
-    console.log(`Response: ${JSON.stringify(response.data)}`);
     return response.data;
   },
   cancelOrder: async (orderId: number): Promise<OrdersResponseDTO> => {
