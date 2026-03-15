@@ -10,6 +10,7 @@ import type {
   CartAddRequestDTO,
   CartUpdateRequestDTO,
   CartDeleteProductRequestDTO,
+  CartSyncRequestDTO,
   UpdateUserRequestDTO,
   UserResponseDTO,
   OrdersRequestDTO,
@@ -116,6 +117,10 @@ export const cartService = {
     const { data } = await api.delete<CartResponseDTO>("/api/cart/clear");
     return data;
   },
+  syncCart: async (data: CartSyncRequestDTO): Promise<CartResponseDTO> => {
+    const response = await api.post<CartResponseDTO>("/api/cart/sync", data);
+    return response.data;
+  },
 };
 
 export const userService = {
@@ -138,8 +143,8 @@ export const orderService = {
     return response.data;
   },
   cancelOrder: async (orderId: number): Promise<OrdersResponseDTO> => {
-    const response = await api.patch<OrdersResponseDTO>(`/api/orders/${orderId}`, { 
-      status: 'CANCELLED' 
+    const response = await api.patch<OrdersResponseDTO>(`/api/orders/${orderId}`, {
+      status: 'CANCELLED'
     });
     return response.data;
   }
@@ -148,9 +153,9 @@ export const orderService = {
 export const paymentService = {
   createIntent: async (orderId: number): Promise<string> => {
     const response = await api.post<string>(
-      "/api/payments/create-intent", 
+      "/api/payments/create-intent",
       { orderId } as PaymentIntentRequestDTO,
-      { responseType: 'text' } 
+      { responseType: 'text' }
     );
     return response.data;
   }
