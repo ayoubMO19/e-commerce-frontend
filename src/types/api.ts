@@ -122,3 +122,12 @@ export interface OrdersResponseDTO {
 export interface PaymentIntentRequestDTO {
   orderId: number;
 }
+
+export interface CartItemSyncDTO {
+  productId: number;
+  quantity: number;
+}
+
+export interface CartSyncRequestDTO {
+  items: CartItemSyncDTO[];
+}

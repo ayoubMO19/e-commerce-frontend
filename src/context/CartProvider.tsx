@@ -4,7 +4,7 @@ import { CartContext } from "./CartContext";
 import { cartService } from "../services/api";
 import { useAuth } from "../hooks/useAuth";
 import { notify } from "../utils/notifications";
-import type { ProductResponseDTO, CartItem, CartResponseDTO } from "../types/api";
+import type { ProductResponseDTO, CartItem, CartResponseDTO, CartSyncRequestDTO } from "../types/api";
 
 const CART_STORAGE_KEY = "vexa_cart_local";
 
@@ -12,8 +12,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated } = useAuth();
-  
-  // Ref para evitar bucles si el efecto se dispara más de lo debido
   const isSyncing = useRef(false);
 
   const updateLocalStateWithBackend = useCallback((remoteCart: CartResponseDTO) => {
@@ -22,8 +20,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       name: item.name,
       price: item.price,
       quantity: item.quantity,
-      urlImage: item.urlImage, 
-      stock: item.stock 
+      urlImage: item.urlImage,
+      stock: item.stock
     })));
     localStorage.removeItem(CART_STORAGE_KEY);
   }, []);
@@ -34,25 +32,29 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!localData) return;
 
     try {
-      const items: CartItem[] = JSON.parse(localData);
-      if (items.length === 0) return;
+      const localItems: CartItem[] = JSON.parse(localData);
+      if (localItems.length === 0) return;
 
-      // Enviamos cada producto local al backend
-      // Usamos un bucle for...of para asegurar que las peticiones se procesen en orden
-      for (const item of items) {
-        await cartService.addToCart({
+      const syncData: CartSyncRequestDTO = {
+        items: localItems.map(item => ({
           productId: item.productId,
           quantity: item.quantity
-        });
-      }
-      
+        }))
+      };
+
+      // Enviamos el batch al backend
+      const updatedCart = await cartService.syncCart(syncData);
+
+      // Actualizamos el estado global con la respuesta directa
+      updateLocalStateWithBackend(updatedCart);
+
       notify.success("Carrito sincronizado con tu cuenta");
     } catch (error) {
       console.error("Error fusionando carrito:", error);
     } finally {
       localStorage.removeItem(CART_STORAGE_KEY);
     }
-  }, []);
+  }, [updateLocalStateWithBackend]);
 
   // Carga y Sincronización
   useEffect(() => {
@@ -63,12 +65,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setIsLoading(true);
 
         try {
-          // fusionamos lo que el usuario eligió como invitado
-          await mergeLocalCartWithBackend();
-          
-          // pedimos el carrito final (que ya incluye lo fusionado)
-          const data = await cartService.getCart();
-          updateLocalStateWithBackend(data);
+          const localData = localStorage.getItem(CART_STORAGE_KEY);
+
+          if (localData && JSON.parse(localData).length > 0) {
+            // Hay productos como invitado -> Sincronizamos (esto ya actualiza el estado)
+            await mergeLocalCartWithBackend();
+          } else {
+            // No hay nada local -> Solo pedimos el carrito del usuario
+            const data = await cartService.getCart();
+            updateLocalStateWithBackend(data);
+          }
         } catch (error) {
           console.error("Error al sincronizar carrito:", error);
         } finally {
@@ -76,13 +82,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
           isSyncing.current = false;
         }
       } else {
-        // Si no está autenticado, cargar de LocalStorage
+        // No autenticado: cargar de LocalStorage
         const localCart = localStorage.getItem(CART_STORAGE_KEY);
-        if (localCart) {
-          setCartItems(JSON.parse(localCart));
-        } else {
-          setCartItems([]);
-        }
+        setCartItems(localCart ? JSON.parse(localCart) : []);
       }
     };
 
@@ -99,9 +101,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addToCart = async (product: ProductResponseDTO) => {
     if (isAuthenticated) {
       try {
-        const response = await cartService.addToCart({ 
-          productId: product.productId, 
-          quantity: 1 
+        const response = await cartService.addToCart({
+          productId: product.productId,
+          quantity: 1
         });
         updateLocalStateWithBackend(response);
         notify.success("Añadido a tu cuenta");
@@ -112,7 +114,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setCartItems(prev => {
         const existing = prev.find(item => item.productId === product.productId);
         if (existing) {
-          return prev.map(item => 
+          return prev.map(item =>
             item.productId === product.productId ? { ...item, quantity: item.quantity + 1 } : item
           );
         }
@@ -137,7 +139,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const updateQuantity = async (productId: number, newQuantity: number) => {
     if (newQuantity <= 0) return removeFromCart(productId);
-    
+
     if (isAuthenticated) {
       try {
         const response = await cartService.updateQuantity({ productId, quantity: newQuantity });
@@ -146,7 +148,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         notify.error("Error al actualizar");
       }
     } else {
-      setCartItems(prev => prev.map(item => 
+      setCartItems(prev => prev.map(item =>
         item.productId === productId ? { ...item, quantity: newQuantity } : item
       ));
     }
@@ -172,9 +174,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ 
-      cartItems, addToCart, removeFromCart, updateQuantity, 
-      clearCart, cartTotal, cartCount, isLoading 
+    <CartContext.Provider value={{
+      cartItems, addToCart, removeFromCart, updateQuantity,
+      clearCart, cartTotal, cartCount, isLoading
     }}>
       {children}
     </CartContext.Provider>
