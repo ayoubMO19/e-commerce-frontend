@@ -38,9 +38,9 @@ export default function Cart() {
   // Función para manejar el checkout
   const handleCheckout = () => {
     if (!user) {
+      // Redirigir al login
       notify.info("Inicia sesión para finalizar tu compra");
-      // Guardamos la ruta actual para volver después del login si fuera necesario
-      navigate("/login", { state: { from: "/checkout" } });
+      navigate("/login");
       return;
     }
 

@@ -1,36 +1,32 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Tag } from "lucide-react";
 import { useCategoriesData } from "../hooks/useProductsData";
 
 export function Categories() {
   const { data: categories = [], isLoading } = useCategoriesData();
-
   const [searchParams] = useSearchParams();
   const currentCategory = searchParams.get("category");
 
-
   return (
-    <section className="py-4">
-      <div className="flex items-center gap-2 mb-4">
-        <Tag className="h-4 w-4 text-gray-400" />
-        <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500">
-          Categorías
+    <section className="py-8">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="h-[1px] w-8 bg-vexa"></div>
+        <h2 className="text-[10px] font-black uppercase tracking-[4px] text-zinc-400">
+          Explorar Categorías
         </h2>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-3">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="h-9 w-24 animate-pulse rounded-full bg-gray-100" />
+            <div key={i} className="h-10 w-28 animate-pulse rounded-xl bg-zinc-100" />
           ))
         ) : (
           <>
-            {/* Opción para ver todos */}
             <Link
               to="/products"
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${!currentCategory
-                  ? "bg-black text-white shadow-md"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${!currentCategory
+                  ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
+                  : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
                 }`}
             >
               Todas
@@ -40,9 +36,9 @@ export function Categories() {
               <Link
                 key={category.categoryId}
                 to={`/products?category=${category.categoryId}`}
-                className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${currentCategory === String(category.categoryId)
-                    ? "bg-black text-white shadow-md"
-                    : "bg-white border border-gray-200 text-gray-600 hover:border-black hover:text-black shadow-sm"
+                className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${currentCategory === String(category.categoryId)
+                    ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
+                    : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
                   }`}
               >
                 {category.name}

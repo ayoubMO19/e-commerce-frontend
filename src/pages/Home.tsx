@@ -5,7 +5,6 @@ import { useProductsData } from "../hooks/useProductsData";
 import { Loader2, AlertCircle } from "lucide-react";
 
 export default function Home() {
-  // Traer datos de productos
   const { data: products = [], isLoading, isError } = useProductsData();
 
   return (

@@ -8,27 +8,31 @@ interface FeaturedProductsProps {
 }
 
 export function FeaturedProducts({ products }: FeaturedProductsProps) {
+  // Solo mostramos 8 productos destacados
   const featuredProducts = products.slice(0, 8);
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-10 py-10">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold tracking-tight text-gray-900">
-          Productos destacados
+        <h2 className="text-2xl font-black uppercase tracking-tighter text-black italic">
+          Productos <span className="text-zinc-300">Destacados</span>
         </h2>
+        <div className="h-[1px] flex-1 mx-8 bg-zinc-100 hidden md:block"></div>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {featuredProducts.map((product) => (
           <ProductCard key={product.productId} product={product} />
         ))}
       </div>
-      <div className="flex justify-center pt-4">
+
+      <div className="flex justify-center pt-8">
         <Link
           to="/products"
-          className="inline-flex items-center gap-2 rounded-full border border-gray-900 bg-white px-6 py-2.5 text-sm font-medium text-gray-900 transition hover:bg-gray-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+          className="group flex items-center gap-3 rounded-full border-2 border-black bg-white px-10 py-4 text-[10px] font-black uppercase tracking-[2px] text-black transition-all hover:bg-black hover:text-white"
         >
-          Ver más
-          <ArrowRight className="h-4 w-4" />
+          Explorar catálogo completo
+          <ArrowRight className="h-4 w-4 text-vexa" />
         </Link>
       </div>
     </section>

@@ -1,25 +1,34 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black px-6 py-16 sm:px-12 sm:py-24 lg:px-16">
-      <div className="relative z-10 mx-auto max-w-2xl text-center">
-        <h1 className="mb-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-          Estilo minimalista para tu día a día
+    <section className="relative overflow-hidden rounded-[40px] bg-black px-6 py-20 sm:px-12 sm:py-32 lg:px-16">
+      <div className="absolute -top-24 -right-24 h-96 w-96 bg-vexa opacity-10 blur-[120px]" />
+      <div className="absolute -bottom-24 -left-24 h-96 w-96 bg-vexa opacity-5 blur-[120px]" />
+
+      <div className="relative z-10 mx-auto max-w-3xl text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-vexa/30 bg-vexa/5 mb-6">
+          <Zap size={12} className="text-vexa fill-vexa" />
+          <span className="text-[10px] font-black uppercase tracking-[3px] text-vexa">VEXA Official Collection</span>
+        </div>
+
+        <h1 className="mb-6 text-4xl font-black tracking-tighter text-white sm:text-6xl lg:text-7xl uppercase italic italic leading-[0.9]">
+          Estilo <span className="text-vexa shadow-vexa">minimalista</span> <br /> para tu día a día
         </h1>
-        <p className="mb-8 text-base text-gray-300 sm:text-lg">
-          Descubre nuestra colección de productos diseñados para ti.
+
+        <p className="mb-10 text-base text-zinc-400 sm:text-lg max-w-xl mx-auto font-medium uppercase tracking-widest text-[10px]">
+          Engineering high-end essentials.
         </p>
+
         <Link
           to="/products"
-          className="inline-flex items-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-medium text-gray-900 transition hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+          className="group inline-flex items-center gap-3 rounded-full bg-vexa px-10 py-4 text-[11px] font-black uppercase tracking-[2px] text-black transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(111,222,138,0.4)]"
         >
           Comprar ahora
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200')] bg-cover bg-center opacity-10 mix-blend-overlay" />
     </section>
   );
 }
