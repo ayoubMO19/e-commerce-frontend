@@ -103,7 +103,7 @@ export default function Register() {
           </div>
           <div className="space-y-1">
             <h1 className="text-4xl font-black tracking-tighter text-black uppercase italic">Vexa Join</h1>
-            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-vexa opacity-80">New Identity</p>
+            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-vexa opacity-80">Crea tu cuenta de cliente</p>
           </div>
         </header>
 

@@ -91,7 +91,7 @@ export default function Login() {
               {isForgotPasswordView ? "Recover" : "Vexa Access"}
             </h1>
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-vexa opacity-80">
-              {isForgotPasswordView ? "Secure Protocol" : "Authentication"}
+              {isForgotPasswordView ? "Recupera tu acceso" : "Gestiona tu cuenta y pedidos"}
             </p>
           </div>
         </header>
