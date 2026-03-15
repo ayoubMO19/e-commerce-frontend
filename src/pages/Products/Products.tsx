@@ -45,8 +45,8 @@ const FilterSidebar = ({
               key={cat.categoryId}
               onClick={() => toggleCategory(cat.categoryId)}
               className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-medium transition-all ${selectedCategoryIds.includes(cat.categoryId)
-                  ? "bg-gray-900 text-white shadow-sm"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                ? "bg-gray-900 text-white shadow-sm"
+                : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                 }`}
             >
               {cat.name}
@@ -65,8 +65,8 @@ const FilterSidebar = ({
             key={range.id}
             onClick={() => setPriceFilter(range.id)}
             className={`rounded-xl px-4 py-2.5 text-left text-xs font-medium transition-all ${selectedPriceRange === range.id
-                ? "bg-gray-100 font-bold text-gray-900"
-                : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+              ? "bg-gray-100 font-bold text-gray-900"
+              : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
               }`}
           >
             {range.label}
@@ -127,8 +127,6 @@ export default function Products() {
     setSearchParams({});
     setIsMobileMenuOpen(false);
   };
-
-  const getCategoryName = (id: number) => categories.find((cat: CategoriesResponseDTO) => cat.categoryId === id)?.name || "General";
 
   const filterProps: FilterProps = {
     isLoadingCategories,
@@ -216,7 +214,6 @@ export default function Products() {
                 <ProductCard
                   key={product.productId}
                   product={product}
-                  categoryName={getCategoryName(product.categoryId)}
                 />
               ))}
             </div>

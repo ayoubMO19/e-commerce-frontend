@@ -83,7 +83,7 @@ export default function ProductDetail() {
         <div className="flex flex-col justify-center space-y-8">
           <header className="space-y-4">
             <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-gray-500">
-              {product.categoryId || "Categoría"}
+              {product.categoryName}
             </span>
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 lg:text-5xl">
               {product.name}
