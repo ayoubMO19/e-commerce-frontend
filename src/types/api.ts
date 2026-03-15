@@ -6,6 +6,7 @@ export interface ProductResponseDTO {
   urlImage: string;
   stock: number;
   categoryId: number;
+  categoryName: string;
 }
 
 export interface CategoriesResponseDTO {
