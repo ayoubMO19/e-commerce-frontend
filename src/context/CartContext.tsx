@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import type { ProductResponseDTO, CartItem } from "../types/api";
 
-// Definimos la interfaz aquí para que sea accesible por los otros archivos
+// CartContext props interface
 export interface CartContextType {
   cartItems: CartItem[];
   addToCart: (product: ProductResponseDTO) => Promise<void>;
@@ -13,4 +13,5 @@ export interface CartContextType {
   isLoading: boolean;
 }
 
+// CartContext interface
 export const CartContext = createContext<CartContextType | undefined>(undefined);

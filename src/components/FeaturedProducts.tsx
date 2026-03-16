@@ -3,12 +3,14 @@ import { ProductCard } from "./ProductCard";
 import type { ProductResponseDTO } from "../types/api";
 import { ArrowRight } from "lucide-react";
 
+// FeaturedProducts props interface
 interface FeaturedProductsProps {
   products: ProductResponseDTO[];
 }
 
+// FeaturedProducts component
 export function FeaturedProducts({ products }: FeaturedProductsProps) {
-  // Solo mostramos 8 productos destacados
+  // Get first 8 products
   const featuredProducts = products.slice(0, 8);
 
   return (

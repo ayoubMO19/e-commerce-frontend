@@ -4,14 +4,16 @@ import { FeaturedProducts } from "../components/FeaturedProducts";
 import { useProductsData } from "../hooks/useProductsData";
 import { Loader2, AlertCircle } from "lucide-react";
 
+// Home page component
 export default function Home() {
+  // Get products data
   const { data: products = [], isLoading, isError } = useProductsData();
 
+  // Render home page
   return (
     <div className="space-y-12">
       <Hero />
       <Categories />
-
       <section className="px-4">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12 text-gray-400">

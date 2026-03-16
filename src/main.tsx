@@ -6,16 +6,17 @@ import App from './App.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 import { CartProvider } from './context/CartProvider.tsx'
 
-// Configuramos el cliente de caché
+// Configuration for React Query
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // Los datos se quedan "frescos" 5 minutos
-      refetchOnWindowFocus: false, // No recargar cada vez que cambias de pestaña
+      staleTime: 1000 * 60 * 5, // Data stays "fresh" for 5 minutes
+      refetchOnWindowFocus: false, // Don't reload each time you switch tabs
     },
   },
 })
 
+// Main App rendering
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>

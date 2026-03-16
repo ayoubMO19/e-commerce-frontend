@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { 
-  ShoppingCart, User, Package, Settings, LogOut, 
-  ChevronDown, Zap // <-- Usaremos Zap como nuestra "V" icónica
+import {
+  ShoppingCart, User, Package, Settings, LogOut,
+  ChevronDown, Zap
 } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
+// Navigation link base styles
 const navLinkBase = "relative text-[10px] font-black uppercase tracking-[2px] text-zinc-500 transition-all duration-300 hover:text-black";
+// Navigation link active styles
 const navLinkActive = "text-black after:content-[''] after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-[2px] after:bg-vexa after:shadow-[0_0_8px_theme(colors.vexa.DEFAULT)]";
 
+// Navbar component
 export function Navbar() {
   const { cartCount } = useCart();
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Handle logout
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -26,7 +30,6 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-zinc-100 bg-white/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-0">
 
-        {/* LOGO: Ahora con icono "V" estilizado */}
         <NavLink to="/" className="flex items-center gap-3 group">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-100 bg-black shadow-sm transition-all duration-500 group-hover:border-vexa/50 group-hover:shadow-[0_0_20px_rgba(111,222,138,0.3)]">
             <Zap className="h-5 w-5 text-vexa fill-vexa transition-all duration-500 group-hover:scale-110 group-hover:rotate-12" />
@@ -37,17 +40,14 @@ export function Navbar() {
           </div>
         </NavLink>
 
-        {/* NAVEGACIÓN CENTRAL */}
         <nav className="hidden items-center gap-10 sm:flex">
           <NavLink to="/" className={({ isActive }) => `${navLinkBase} ${isActive ? navLinkActive : ""}`}>Inicio</NavLink>
           <NavLink to="/products" className={({ isActive }) => `${navLinkBase} ${isActive ? navLinkActive : ""}`}>Productos</NavLink>
           <NavLink to="/contact" className={({ isActive }) => `${navLinkBase} ${isActive ? navLinkActive : ""}`}>Contacto</NavLink>
         </nav>
 
-        {/* ACCIONES DERECHA */}
         <div className="flex items-center gap-4">
 
-          {/* CARRITO */}
           <NavLink
             to="/cart"
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-zinc-100 bg-white text-zinc-700 transition-all hover:border-black hover:text-black shadow-sm active:scale-90"
@@ -62,9 +62,8 @@ export function Navbar() {
 
           <div className="h-6 w-[1px] bg-zinc-100 mx-1 hidden sm:block" />
 
-          {/* PERFIL */}
           {isAuthenticated ? (
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setIsMenuOpen(true)}
               onMouseLeave={() => setIsMenuOpen(false)}
@@ -85,7 +84,6 @@ export function Navbar() {
                 </div>
               </button>
 
-              {/* DROPDOWN */}
               {isMenuOpen && (
                 <div className="absolute right-0 top-full w-52 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="overflow-hidden rounded-[28px] border border-zinc-100 bg-white/95 backdrop-blur-md p-2 shadow-2xl shadow-black/5">

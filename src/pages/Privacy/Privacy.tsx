@@ -1,3 +1,4 @@
+// Privacy policy page
 export default function Privacy() {
   return (
     <div className="mx-auto max-w-4xl space-y-8">

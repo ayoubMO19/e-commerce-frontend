@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 
+// Payment success page
 export default function PaymentSuccess() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
@@ -10,7 +11,6 @@ export default function PaymentSuccess() {
                     <CheckCircle2 size={48} className="text-vexa stroke-[1.5px]" />
                 </div>
             </div>
-
             <div className="text-center space-y-3">
                 <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black">
                     ¡Pago Confirmado!
@@ -19,7 +19,6 @@ export default function PaymentSuccess() {
                     Bienvenido a la selección exclusiva de VEXA.
                 </p>
             </div>
-
             <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full max-w-md">
                 <Link
                     to="/my-orders"
@@ -35,7 +34,6 @@ export default function PaymentSuccess() {
                     <ArrowRight size={14} className="text-vexa" />
                 </Link>
             </div>
-
             <div className="mt-16 flex items-center gap-4 opacity-20">
                 <div className="h-[1px] w-12 bg-zinc-400"></div>
                 <span className="text-[8px] font-black uppercase tracking-[4px]">Vexa Store</span>
