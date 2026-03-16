@@ -1,59 +1,65 @@
-import { Phone, Mail, Linkedin, Github } from "lucide-react";
+import { Phone, Mail, Linkedin, Github, Zap } from "lucide-react";
 
 // Contact page
 export default function Contact() {
   return (
-    <div className="mx-auto max-w-3xl space-y-12">
-      <header className="space-y-3 text-center">
-        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-          Contacto
-        </h1>
-        <p className="text-base text-gray-500 sm:text-lg">
-          Estamos aquí para ayudarte. Ponte en contacto con nosotros a través
-          de cualquiera de estos medios.
-        </p>
+    <div className="mx-auto max-w-4xl space-y-16 py-12 px-4 animate-in fade-in duration-700">
+      <header className="space-y-4 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-black shadow-xl">
+          <Zap className="h-7 w-7 text-vexa fill-vexa" />
+        </div>
+        <div className="space-y-1">
+          <h1 className="text-4xl font-black tracking-tighter text-black uppercase italic">
+            Get in Touch
+          </h1>
+          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-vexa opacity-80">
+            Comunicate con nuestro equipo Vexa
+          </p>
+        </div>
       </header>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <a
           href="tel:+34631515999"
-          className="group flex flex-col items-center gap-4 rounded-xl border border-gray-100 bg-white p-8 text-center shadow-sm transition hover:border-gray-900 hover:shadow-md"
+          className="group flex flex-col items-center gap-6 rounded-[2.5rem] border border-zinc-100 bg-white p-10 text-center shadow-2xl shadow-black/5 transition-all hover:border-vexa/30 hover:scale-[1.02]"
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 transition group-hover:bg-gray-900">
-            <Phone className="h-8 w-8 text-gray-600 transition group-hover:text-white" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-50 text-black transition-colors group-hover:bg-black group-hover:text-vexa">
+            <Phone className="h-7 w-7" />
           </div>
-          <div className="space-y-1">
-            <h3 className="text-sm font-medium text-gray-500">Teléfono</h3>
-            <p className="text-base font-semibold text-gray-900">
-              +34 631 515 999
-            </p>
+          <div className="space-y-2">
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Teléfono</h3>
+            <p className="text-lg font-black text-black italic">+34 631 515 999</p>
           </div>
         </a>
         <a
           href="mailto:ayoubmorghiouhda@gmail.com"
-          className="group flex flex-col items-center gap-4 rounded-xl border border-gray-100 bg-white p-8 text-center shadow-sm transition hover:border-gray-900 hover:shadow-md"
+          className="group flex flex-col items-center gap-6 rounded-[2.5rem] border border-zinc-100 bg-white p-10 text-center shadow-2xl shadow-black/5 transition-all hover:border-vexa/30 hover:scale-[1.02]"
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 transition group-hover:bg-gray-900">
-            <Mail className="h-8 w-8 text-gray-600 transition group-hover:text-white" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-50 text-black transition-colors group-hover:bg-black group-hover:text-vexa">
+            <Mail className="h-7 w-7" />
           </div>
-          <div className="space-y-1">
-            <h3 className="text-sm font-medium text-gray-500">Correo</h3>
-            <p className="text-sm font-semibold text-gray-900 break-all">
-              ayoubmorghiouhda@gmail.com
-            </p>
+          <div className="space-y-2">
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Correo Electrónico</h3>
+            <p className="text-sm font-black text-black break-all">ayoubmorghiouhda@gmail.com</p>
           </div>
         </a>
       </div>
-      <section className="space-y-6">
-        <h2 className="text-center text-lg font-semibold text-gray-900">
-          Síguenos en redes sociales
-        </h2>
-        <div className="flex justify-center gap-4">
+
+      <section className="space-y-8 pt-8">
+        <div className="flex items-center gap-4">
+          <div className="h-px flex-1 bg-zinc-100"></div>
+          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
+            Digital Identity
+          </h2>
+          <div className="h-px flex-1 bg-zinc-100"></div>
+        </div>
+
+        <div className="flex justify-center gap-6">
           <a
             href="https://www.linkedin.com/in/ayoub-morghi-ouhda/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex h-14 w-14 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition hover:border-gray-900 hover:bg-gray-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+            className="group flex h-16 w-16 items-center justify-center rounded-2xl border border-zinc-100 bg-white text-black shadow-lg shadow-black/5 transition-all hover:bg-black hover:text-vexa hover:border-vexa/30 hover:-translate-y-1"
           >
             <Linkedin className="h-6 w-6" />
           </a>
@@ -61,7 +67,7 @@ export default function Contact() {
             href="https://github.com/ayoubMO19"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex h-14 w-14 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition hover:border-gray-900 hover:bg-gray-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+            className="group flex h-16 w-16 items-center justify-center rounded-2xl border border-zinc-100 bg-white text-black shadow-lg shadow-black/5 transition-all hover:bg-black hover:text-vexa hover:border-vexa/30 hover:-translate-y-1"
           >
             <Github className="h-6 w-6" />
           </a>
