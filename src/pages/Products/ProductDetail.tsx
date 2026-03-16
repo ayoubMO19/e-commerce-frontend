@@ -5,6 +5,7 @@ import { productService } from "../../services/api";
 import { useCart } from "../../hooks/useCart";
 import type { ProductResponseDTO } from "../../types/api";
 
+// Product detail page
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
 
+  // Fetch product data
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -29,6 +31,7 @@ export default function ProductDetail() {
     fetchProduct();
   }, [id]);
 
+  // Add product to cart
   const handleAddToCart = async () => {
     if (!product) return;
     setIsAdding(true);
@@ -36,6 +39,7 @@ export default function ProductDetail() {
     setIsAdding(false);
   };
 
+  // Loading state
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -44,6 +48,7 @@ export default function ProductDetail() {
     );
   }
 
+  // Product not found
   if (!product) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-4">
@@ -53,9 +58,9 @@ export default function ProductDetail() {
     );
   }
 
+  // Render product detail
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Botón Volver */}
       <button
         onClick={() => navigate(-1)}
         className="mb-8 flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-black"
@@ -63,9 +68,7 @@ export default function ProductDetail() {
         <ArrowLeft className="h-4 w-4" />
         Volver
       </button>
-
       <div className="grid gap-12 lg:grid-cols-2">
-        {/* Columna Izquierda: Imagen */}
         <div className="relative aspect-square overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
           <img
             src={product.urlImage}
@@ -78,8 +81,6 @@ export default function ProductDetail() {
             </span>
           )}
         </div>
-
-        {/* Columna Derecha: Información */}
         <div className="flex flex-col justify-center space-y-8">
           <header className="space-y-4">
             <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-gray-500">
@@ -99,8 +100,6 @@ export default function ProductDetail() {
               {product.description || "Sin descripción disponible para este producto."}
             </p>
           </div>
-
-          {/* Acciones */}
           <div className="space-y-4 pt-4">
             <button
               onClick={handleAddToCart}
@@ -119,8 +118,6 @@ export default function ProductDetail() {
               )}
             </button>
           </div>
-
-          {/* Beneficios / Info Extra */}
           <div className="grid grid-cols-1 gap-4 pt-8 sm:grid-cols-3">
             <div className="flex items-center gap-3 text-gray-500">
               <Truck className="h-5 w-5 text-black" />

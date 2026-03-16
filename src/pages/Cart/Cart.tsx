@@ -5,6 +5,7 @@ import { useCart } from "../../hooks/useCart";
 import { notify } from "../../utils/notifications";
 import { useAuth } from "../../hooks/useAuth";
 
+// Cart page component
 export default function Cart() {
   const {
     cartItems,
@@ -18,13 +19,14 @@ export default function Cart() {
   const [isProcessing, setIsProcessing] = useState<number | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
-  
-  // Memorizamos el total para evitar recalcular en renders por estados locales (como isProcessing)
+
+  // Memorize total to avoid recalculating on local state changes (like isProcessing)
   const finalTotal = useMemo(() => {
     const shippingCost = 0;
     return cartTotal + shippingCost;
   }, [cartTotal]);
 
+  // Handle quantity update
   const handleUpdateQuantity = async (productId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
     setIsProcessing(productId);
@@ -35,19 +37,20 @@ export default function Cart() {
     }
   };
 
-  // Función para manejar el checkout
+  // Handle checkout
   const handleCheckout = () => {
     if (!user) {
-      // Redirigir al login
+      // Redirect to login
       notify.info("Inicia sesión para finalizar tu compra");
       navigate("/login");
       return;
     }
 
-    // Si está logueado, vamos directo al formulario de dirección
+    // If logged in, go directly to address form
     navigate("/checkout");
   };
 
+  // Empty cart state
   if (cartItems.length === 0) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-6">
@@ -69,6 +72,7 @@ export default function Cart() {
     );
   }
 
+  // Main cart content
   return (
     <div className="space-y-8">
       <header className="flex items-center justify-between">
@@ -162,7 +166,6 @@ export default function Cart() {
           ))}
         </div>
 
-        {/* Columna derecha: Resumen */}
         <div className="lg:col-span-1">
           <div className="sticky top-24 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-semibold text-gray-900">Resumen del pedido</h2>

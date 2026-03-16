@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-/**
- * Hook para consumir el contexto de autenticación desde cualquier componente.
- */
+// Hook to consume authentication context from any component
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {

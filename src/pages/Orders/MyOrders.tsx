@@ -4,12 +4,14 @@ import { orderService } from '../../services/api';
 import type { OrdersResponseDTO } from '../../types/api';
 import { CreditCard, Package, Clock, XCircle, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 
+// My Orders page
 const MyOrders: React.FC = () => {
   const [orders, setOrders] = useState<OrdersResponseDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState<number | null>(null);
   const navigate = useNavigate();
 
+  // Fetch orders on component mount
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -24,10 +26,12 @@ const MyOrders: React.FC = () => {
     fetchOrders();
   }, []);
 
+  // Toggle order expansion
   const toggleOrder = (orderId: number) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
   };
 
+  // Get status style
   const getStatusStyle = (status: string) => {
     switch (status) {
       case 'PAID': return 'bg-green-50 text-green-600 border-green-100';
@@ -37,8 +41,10 @@ const MyOrders: React.FC = () => {
     }
   };
 
+  // Show loading spinner
   if (isLoading) return <div className="flex justify-center py-20"><div className="animate-spin h-8 w-8 border-b-2 border-black rounded-full" /></div>;
 
+  // Render orders
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <header className="mb-12">
@@ -54,14 +60,12 @@ const MyOrders: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
-            <div 
-              key={order.orderId} 
-              className={`bg-white border transition-all duration-300 rounded-[32px] overflow-hidden ${
-                expandedOrder === order.orderId ? 'border-black shadow-2xl shadow-black/5' : 'border-zinc-100'
-              }`}
+            <div
+              key={order.orderId}
+              className={`bg-white border transition-all duration-300 rounded-[32px] overflow-hidden ${expandedOrder === order.orderId ? 'border-black shadow-2xl shadow-black/5' : 'border-zinc-100'
+                }`}
             >
-              {/* CABECERA DE LA CARD */}
-              <div 
+              <div
                 onClick={() => toggleOrder(order.orderId)}
                 className="p-6 cursor-pointer flex flex-wrap items-center justify-between gap-4"
               >
@@ -81,7 +85,6 @@ const MyOrders: React.FC = () => {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-8">
                   <div className="text-right hidden sm:block">
                     <p className="text-xl font-black tracking-tighter italic">{order.totalPrice.toFixed(2)}€</p>
@@ -90,12 +93,8 @@ const MyOrders: React.FC = () => {
                   {expandedOrder === order.orderId ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </div>
               </div>
-
-              {/* DETALLE EXPANDIBLE */}
               {expandedOrder === order.orderId && (
                 <div className="border-t border-zinc-50 bg-zinc-50/50 p-6 space-y-8 animate-in slide-in-from-top-2 duration-300">
-                  
-                  {/* PRODUCTOS */}
                   <div className="space-y-4">
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Productos en este pedido</h4>
                     <div className="grid gap-4">
@@ -111,8 +110,6 @@ const MyOrders: React.FC = () => {
                       ))}
                     </div>
                   </div>
-
-                  {/* DIRECCIÓN Y ACCIONES */}
                   <div className="flex flex-col md:flex-row justify-between gap-8 pt-4 border-t border-zinc-100">
                     <div className="space-y-2 max-w-xs">
                       <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
@@ -122,7 +119,6 @@ const MyOrders: React.FC = () => {
                         {order.shippingAddress}
                       </p>
                     </div>
-
                     <div className="flex items-end gap-3">
                       {order.status === 'PENDING' && (
                         <>

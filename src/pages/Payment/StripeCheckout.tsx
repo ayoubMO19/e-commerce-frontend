@@ -7,16 +7,20 @@ import { paymentService } from '../../services/api';
 import { notify } from '../../utils/notifications';
 import { useNavigate } from 'react-router-dom';
 
+// Stripe public key from environment
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
+// Props for StripeCheckout component
 interface StripeCheckoutProps {
   orderId: number;
 }
 
+// Stripe checkout page
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
   const [clientSecret, setClientSecret] = useState<string>("");
   const navigate = useNavigate();
 
+  // Initialize payment
   useEffect(() => {
     const initPayment = async () => {
       try {
@@ -24,15 +28,15 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
         setClientSecret(secret);
       } catch (error) {
         console.error("Error al inicializar el pago:", error);
-        // Notificamos y redirigimos
+        // Notify and redirect
         notify.error("No pudimos conectar con la pasarela. Gestiona el pago desde tus pedidos.");
         setTimeout(() => navigate('/my-orders'), 3000);
       }
     };
     initPayment();
   }, [orderId, navigate]);
-  
-  // Configuración de apariencia
+
+  // Configuration of appearance
   const appearance: Appearance = {
     theme: 'flat',
     variables: {
@@ -45,11 +49,13 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
     },
   };
 
+  // Options for Stripe Elements
   const options: StripeElementsOptions = {
     clientSecret,
     appearance,
   };
 
+  // Render the checkout form
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-[32px] border border-zinc-100 shadow-sm">
@@ -62,7 +68,6 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
             Orden #{orderId}
           </p>
         </div>
-
         {clientSecret ? (
           <Elements stripe={stripePromise} options={options}>
             <CheckoutForm orderId={orderId} />

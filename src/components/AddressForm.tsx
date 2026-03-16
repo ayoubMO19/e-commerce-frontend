@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+// Photon API feature interface
 interface PhotonFeature {
   properties: {
     name?: string;
@@ -11,10 +12,12 @@ interface PhotonFeature {
   };
 }
 
+// Photon API response interface
 interface PhotonResponse {
   features: PhotonFeature[];
 }
 
+// Address state interface
 interface AddressState {
   street: string;
   city: string;
@@ -24,10 +27,12 @@ interface AddressState {
   floor: string;
 }
 
+// Component props
 interface AddressFormProps {
   onAddressChange: (fullAddress: string, isValid: boolean) => void;
 }
 
+// Main component
 export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => {
   const [query, setQuery] = useState<string>('');
   const [suggestions, setSuggestions] = useState<PhotonFeature[]>([]);
@@ -37,6 +42,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
     street: '', city: '', postcode: '', country: '', number: '', floor: ''
   });
 
+  // Format full address
   const formatFullAddress = useCallback((d: AddressState): string => {
     const parts = [
       `${d.street} ${d.number}`.trim(),
@@ -49,16 +55,18 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
   }, []);
 
   useEffect(() => {
-    // Es válido si tenemos al menos calle, número, ciudad y código postal
+    // Check if address is valid
     const isValid = !!(details.street && details.number && details.city && details.postcode && details.floor);
     onAddressChange(formatFullAddress(details), isValid);
   }, [details, onAddressChange, formatFullAddress]);
 
+  // Search address
   const searchAddress = async (text: string) => {
     if (text.length < 3) {
       setSuggestions([]);
       return;
     }
+    // Fetch suggestions from Photon API
     try {
       const response = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(text)}&limit=5`);
       const data: PhotonResponse = await response.json();
@@ -68,6 +76,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
     }
   };
 
+  // Handle suggestion selection
   const handleSelectSuggestion = (s: PhotonFeature) => {
     const p = s.properties;
     setDetails(prev => ({

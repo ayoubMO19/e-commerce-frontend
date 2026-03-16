@@ -1,10 +1,11 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useCategoriesData } from "../hooks/useProductsData";
 
+// Categories component
 export function Categories() {
   const { data: categories = [], isLoading } = useCategoriesData();
   const [searchParams] = useSearchParams();
-  const currentCategory = searchParams.get("category");
+  const currentCategory = searchParams.get("category"); // Get current category from URL
 
   return (
     <section className="py-8">
@@ -25,8 +26,8 @@ export function Categories() {
             <Link
               to="/products"
               className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${!currentCategory
-                  ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
-                  : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
+                ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
+                : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
                 }`}
             >
               Todas
@@ -37,8 +38,8 @@ export function Categories() {
                 key={category.categoryId}
                 to={`/products?category=${category.categoryId}`}
                 className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${currentCategory === String(category.categoryId)
-                    ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
-                    : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
+                  ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
+                  : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
                   }`}
               >
                 {category.name}

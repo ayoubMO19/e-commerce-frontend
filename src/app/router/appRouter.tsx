@@ -6,7 +6,7 @@ import CheckoutPage from '../../pages/Checkout/CheckoutPage';
 import StripeCheckout from '../../pages/Payment/StripeCheckout';
 import MyOrders from "../../pages/Orders/MyOrders";
 
-// Páginas con carga perezosa (Lazy Load)
+// Pages with lazy load
 const Home = lazy(() => import("../../pages/Home"));
 const Products = lazy(() => import("../../pages/Products/Products"));
 const ProductDetail = lazy(() => import("../../pages/Products/ProductDetail"));
@@ -18,22 +18,23 @@ const Register = lazy(() => import("../../pages/Auth/Register"));
 const Profile = lazy(() => import("../../pages/Profile/Profile"));
 const PaymentSuccess = lazy(() => import("../../pages/Payment/PaymentSuccess"));
 
-// Un cargador simple para cuando se cambia de página
+// Page loader for when changing pages
 const PageLoader = () => (
   <div className="flex h-[60vh] items-center justify-center">
     <div className="h-6 w-6 animate-spin rounded-full border-2 border-black border-t-transparent" />
   </div>
 );
 
-// Wrapper para la ruta de pago que extrae el orderId de la URL
+// Wrapper for the payment route that extracts the orderId from the URL
 const PaymentRouteWrapper = () => {
-  // useParams extrae el ":orderId" de la URL
+  // useParams extracts the ":orderId" from the URL
   const { orderId } = useParams<{ orderId: string }>();
 
-  // Convertimos a número y se lo pasamos al componente
+  // Convert to number and pass it to the component
   return <StripeCheckout orderId={Number(orderId)} />;
 };
 
+// Main router component
 export default function AppRouter() {
   return (
     <BrowserRouter>

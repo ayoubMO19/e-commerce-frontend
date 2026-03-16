@@ -4,10 +4,17 @@ import { Mail, Lock, User, UserCircle, AlertCircle, Zap, Eye, EyeOff, CheckCircl
 import { useAuth } from "../../hooks/useAuth";
 import type { RegisterRequestDTO } from "../../types/api";
 
+// Register page component
 export default function Register() {
   const navigate = useNavigate();
   const { register, isAuthenticated } = useAuth();
 
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // Form state
   const [formData, setFormData] = useState<RegisterRequestDTO>({
     name: "",
     surname: "",
@@ -15,17 +22,14 @@ export default function Register() {
     password: "",
   });
 
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
+  // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
+  // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -44,14 +48,16 @@ export default function Register() {
     }
   };
 
+  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     if (error) setError("");
   };
 
+  // Redirect if already authenticated
   if (isAuthenticated) return null;
 
-  // VISTA DE ÉXITO (VERIFICACIÓN)
+  // Success view (verification)
   if (isSuccess) {
     return (
       <div className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-2xl items-center px-4 animate-in fade-in zoom-in duration-500">
@@ -94,6 +100,7 @@ export default function Register() {
     );
   }
 
+  // Main registration form
   return (
     <div className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-md items-center px-4 animate-in fade-in duration-700">
       <div className="w-full space-y-10 py-10">

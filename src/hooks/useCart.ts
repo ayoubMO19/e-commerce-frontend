@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
-/**
- * Hook para consumir el carrito desde cualquier componente.
- */
+// Hook to consume cart from any component
 export const useCart = () => {
   const context = useContext(CartContext);
 
   if (!context) {
-    throw new Error("useCart debe ser utilizado dentro de un CartProvider");
+    throw new Error("useCart must be used within a CartProvider");
   }
 
   return context;

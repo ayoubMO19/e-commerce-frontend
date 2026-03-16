@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { productService, categoriesService } from '../services/api';
 
-/**
- * Hook para obtener todos los productos.
- */
+// Hook to get all products.
 export const useProductsData = () => {
   return useQuery({
     queryKey: ['products'],
@@ -11,9 +9,7 @@ export const useProductsData = () => {
   });
 };
 
-/**
- * Hook para obtener todas las categorías.
- */
+// Hook to get all categories.
 export const useCategoriesData = () => {
   return useQuery({
     queryKey: ['categories'],
@@ -22,9 +18,7 @@ export const useCategoriesData = () => {
 };
 
 
-/**
- * Hook para obtener un solo producto (Detalles).
- */
+// Hook to get a single product (Details).
 export const useProductDetail = (id: string | number) => {
   return useQuery({
     queryKey: ['product', id],

@@ -5,9 +5,10 @@ import { ProductCard } from "../../components/ProductCard";
 import { useProductsData, useCategoriesData } from "../../hooks/useProductsData";
 import type { CategoriesResponseDTO } from "../../types/api";
 
-// Tipos y constantes
+// Types and constants
 type PriceRangeId = "all" | "0-100" | "100-200" | "200plus";
 
+// Price ranges
 const PRICE_RANGES: { id: PriceRangeId; label: string; min: number; max: number }[] = [
   { id: "all", label: "Todos los precios", min: 0, max: Infinity },
   { id: "0-100", label: "Hasta 100 €", min: 0, max: 100 },
@@ -15,6 +16,7 @@ const PRICE_RANGES: { id: PriceRangeId; label: string; min: number; max: number 
   { id: "200plus", label: "Más de 200 €", min: 200, max: Infinity },
 ];
 
+// Filter props
 interface FilterProps {
   isLoadingCategories: boolean;
   categories: CategoriesResponseDTO[];
@@ -24,7 +26,7 @@ interface FilterProps {
   setPriceFilter: (rangeId: PriceRangeId) => void;
 }
 
-// Filtro lateral
+// Filter sidebar
 const FilterSidebar = ({
   isLoadingCategories,
   categories,
@@ -56,7 +58,6 @@ const FilterSidebar = ({
         )}
       </div>
     </section>
-
     <section className="space-y-5">
       <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-900">Rango de precio</h3>
       <div className="flex flex-col gap-1.5">
@@ -77,22 +78,26 @@ const FilterSidebar = ({
   </div>
 );
 
-// Componente principal
+// Main component
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Fetch products and categories
   const { data: products = [], isLoading: isLoadingProducts, isError: isErrorProducts } = useProductsData();
   const { data: categories = [], isLoading: isLoadingCategories } = useCategoriesData();
 
+  // Get selected category IDs from URL params
   const selectedCategoryIds = useMemo(() => {
     const param = searchParams.get("category");
     return param ? param.split(",").map(Number).filter((id) => !isNaN(id)) : [];
   }, [searchParams]);
 
+  // Get selected price range from URL params
   const selectedPriceRange = (searchParams.get("price") as PriceRangeId) || "all";
 
+  // Filter products based on search, category, and price range
   const filteredProducts = useMemo(() => {
     const normalizedSearch = searchTerm.toLowerCase().trim();
     const priceRange = PRICE_RANGES.find((r) => r.id === selectedPriceRange) || PRICE_RANGES[0];
@@ -107,6 +112,7 @@ export default function Products() {
     });
   }, [searchTerm, selectedCategoryIds, selectedPriceRange, products]);
 
+  // Toggle category filter
   const toggleCategory = (id: number) => {
     const newSelection = selectedCategoryIds.includes(id)
       ? selectedCategoryIds.filter((c) => c !== id)
@@ -116,18 +122,21 @@ export default function Products() {
     setSearchParams(searchParams);
   };
 
+  // Set price filter
   const setPriceFilter = (rangeId: PriceRangeId) => {
     if (rangeId === "all") searchParams.delete("price");
     else searchParams.set("price", rangeId);
     setSearchParams(searchParams);
   };
 
+  // Clear all filters
   const clearAllFilters = () => {
     setSearchTerm("");
     setSearchParams({});
     setIsMobileMenuOpen(false);
   };
 
+  // Filter props
   const filterProps: FilterProps = {
     isLoadingCategories,
     categories,
@@ -137,6 +146,7 @@ export default function Products() {
     setPriceFilter,
   };
 
+  // Error state
   if (isErrorProducts) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center rounded-[2.5rem] border border-gray-100 bg-gray-50/50 p-10 text-center">
@@ -147,6 +157,7 @@ export default function Products() {
     );
   }
 
+  // Main content
   return (
     <div className="relative min-h-screen">
       <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -156,7 +167,6 @@ export default function Products() {
             {filteredProducts.length} Piezas disponibles
           </p>
         </header>
-
         <div className="flex items-center gap-3">
           <div className="relative flex-1 md:w-80">
             <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
@@ -177,7 +187,6 @@ export default function Products() {
           </button>
         </div>
       </div>
-
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[260px,1fr]">
         <aside className="hidden space-y-6 lg:sticky lg:top-24 lg:block lg:self-start">
           <div className="flex items-center justify-between px-1">
@@ -192,7 +201,6 @@ export default function Products() {
             <FilterSidebar {...filterProps} />
           </div>
         </aside>
-
         <main>
           {isLoadingProducts ? (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -221,7 +229,7 @@ export default function Products() {
         </main>
       </div>
 
-      {/* MOBILE DRAWER */}
+      {/* MOBILE FILTER DRAWER */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex justify-end lg:hidden">
           <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />

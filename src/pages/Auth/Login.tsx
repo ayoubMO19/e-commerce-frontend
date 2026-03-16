@@ -5,10 +5,12 @@ import { useAuth } from "../../hooks/useAuth";
 import type { LoginRequestDTO } from "../../types/api";
 import { authService } from "../../services/api";
 
+// Login page component
 export default function Login() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
 
+  // Form state
   const [formData, setFormData] = useState<LoginRequestDTO>({ email: "", password: "" });
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -16,15 +18,18 @@ export default function Login() {
   const [isForgotPasswordView, setIsForgotPasswordView] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
+  // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) navigate("/", { replace: true });
   }, [isAuthenticated, navigate]);
 
+  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     if (error) setError("");
   };
 
+  // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -38,6 +43,7 @@ export default function Login() {
     }
   };
 
+  // Handle reset password
   const handleResetPassword = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.email) return setError("Introduce tu email");
@@ -52,8 +58,10 @@ export default function Login() {
     }
   };
 
+  // Redirect if already authenticated
   if (isAuthenticated) return null;
 
+  // Show email sent confirmation
   if (emailSent) {
     return (
       <div className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-md items-center px-4 animate-in fade-in zoom-in duration-500">
@@ -79,6 +87,7 @@ export default function Login() {
     );
   }
 
+  // Main login form
   return (
     <div className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-md items-center px-4 animate-in fade-in duration-700">
       <div className="w-full space-y-10 py-12">

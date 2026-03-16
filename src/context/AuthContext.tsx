@@ -7,6 +7,7 @@ import type { UserResponseDTO, LoginRequestDTO, RegisterRequestDTO } from "../ty
 import { authService } from "../services/api";
 import { handleAuthError } from "../utils/authErrorHandler";
 
+// AuthContext props interface
 interface AuthContextType {
   user: UserResponseDTO | null;
   token: string | null;
@@ -17,11 +18,14 @@ interface AuthContextType {
   logout: () => void;
 }
 
+// AuthContext interface
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Auth constants
 const AUTH_TOKEN_KEY = "auth_token";
 const AUTH_USER_KEY = "auth_user";
 
+// AuthProvider component
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem(AUTH_TOKEN_KEY));
   const [user, setUser] = useState<UserResponseDTO | null>(() => {
@@ -38,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Función para iniciar sesión
+  // Login function
   const login = async (credentials: LoginRequestDTO) => {
     setIsLoading(true);
     try {
@@ -56,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Función para registrar un nuevo usuario
+  // Register function
   const register = async (userData: RegisterRequestDTO) => {
     setIsLoading(true);
     try {
@@ -68,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Función para cerrar sesión
+  // Logout function
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_USER_KEY);
@@ -77,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.location.href = "/login";
   };
 
+  // Return AuthContext.Provider
   return (
     <AuthContext.Provider
       value={{
@@ -94,4 +99,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Export AuthContext
 export { AuthContext };

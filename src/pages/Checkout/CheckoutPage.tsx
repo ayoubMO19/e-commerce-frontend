@@ -4,6 +4,7 @@ import { cartService, orderService } from '../../services/api';
 import type { CartResponseDTO } from '../../types/api';
 import { AddressForm } from '../../components/AddressForm';
 
+// Checkout page component
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState<CartResponseDTO | null>(null);
@@ -11,6 +12,7 @@ const CheckoutPage: React.FC = () => {
   const [isAddressValid, setIsAddressValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch cart on component mount
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -26,18 +28,20 @@ const CheckoutPage: React.FC = () => {
     fetchCart();
   }, [navigate]);
 
+  // Handle address change
   const handleAddressChange = useCallback((fullAddr: string, isValid: boolean) => {
     setShippingAddress(fullAddr);
     setIsAddressValid(isValid);
   }, []);
 
+  // Handle create order
   const handleCreateOrder = async () => {
     if (!isAddressValid || isLoading) return;
 
     setIsLoading(true);
     try {
       const order = await orderService.createOrder({ shippingAddress });
-      navigate(`/payment/${order.orderId}`);
+      navigate(`/payment/${order.orderId}`); // Redirect to payment page
     } catch {
       alert("Error al crear el pedido. Inténtalo de nuevo.");
     } finally {
@@ -50,8 +54,6 @@ const CheckoutPage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
-        {/* LADO IZQUIERDO: DIRECCIÓN */}
         <div className="space-y-10">
           <div>
             <h1 className="text-4xl font-black uppercase tracking-tighter italic leading-none">Envío</h1>
@@ -64,7 +66,6 @@ const CheckoutPage: React.FC = () => {
             <AddressForm onAddressChange={handleAddressChange} />
           </div>
         </div>
-        {/* LADO DERECHO: RESUMEN Y ACCIÓN */}
         <div className="lg:sticky lg:top-24 space-y-8">
           <div className="bg-zinc-50 rounded-[40px] p-8 space-y-8">
             <h2 className="text-xl font-black uppercase tracking-tighter italic">Tu Pedido</h2>
@@ -99,7 +100,6 @@ const CheckoutPage: React.FC = () => {
                 <span className="text-3xl font-black tracking-tighter italic leading-none">{cart.totalPrice.toFixed(2)}€</span>
               </div>
             </div>
-
             <div className="pt-2">
               <button
                 onClick={handleCreateOrder}
@@ -122,7 +122,6 @@ const CheckoutPage: React.FC = () => {
             <div className="h-[1px] flex-1 bg-zinc-100"></div>
           </div>
         </div>
-
       </div>
     </div>
   );

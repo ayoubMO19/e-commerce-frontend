@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 
+// Toast options interface
 interface ToastOptions {
   description?: string;
   action?: {
@@ -8,7 +9,9 @@ interface ToastOptions {
   };
 }
 
+// Notification utility
 export const notify = {
+  // Success notification
   success: (message: string, options?: ToastOptions) => {
     toast.success(message, {
       description: options?.description,
@@ -20,6 +23,7 @@ export const notify = {
     },);
   },
 
+  // Error notification
   error: (message: string, options?: ToastOptions) => {
     toast.error(message, {
       description: options?.description,
@@ -31,6 +35,7 @@ export const notify = {
     },);
   },
 
+  // Warning notification
   warn: (message: string, options?: ToastOptions) => {
     toast.warning(message, {
       description: options?.description,
@@ -42,6 +47,7 @@ export const notify = {
     },);
   },
 
+  // Info notification
   info: (message: string, options?: ToastOptions) => {
     toast(message, {
       description: options?.description,

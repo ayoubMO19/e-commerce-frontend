@@ -18,8 +18,10 @@ import type {
   PaymentIntentRequestDTO,
 } from "../types/api";
 
-const API_BASE_URL = "https://e-commerce-backend-lny2.onrender.com";
+// Base URL from environment variables
+const API_BASE_URL = import.meta.env.API_BASE_URL;
 
+// Create axios instance
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -27,6 +29,7 @@ export const api = axios.create({
   },
 });
 
+// Add auth token to requests
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("auth_token");
@@ -38,6 +41,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+// Handle 401 errors
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
@@ -49,6 +53,7 @@ api.interceptors.response.use(
   },
 );
 
+// Auth service
 export const authService = {
   login: async (credentials: LoginRequestDTO): Promise<AuthResponseDTO> => {
     const response = await api.post<AuthResponseDTO>(
@@ -71,6 +76,7 @@ export const authService = {
   },
 };
 
+// Product service
 export const productService = {
   getAll: async (): Promise<ProductResponseDTO[]> => {
     const response = await api.get<ProductResponseDTO[] | ProductResponseDTO>(
@@ -85,6 +91,7 @@ export const productService = {
   },
 };
 
+// Categories service
 export const categoriesService = {
   getAll: async (): Promise<CategoriesResponseDTO[]> => {
     const response = await api.get<CategoriesResponseDTO[]>("/api/categories");
@@ -92,6 +99,7 @@ export const categoriesService = {
   },
 };
 
+// Cart service
 export const cartService = {
   getCart: async (): Promise<CartResponseDTO> => {
     const response = await api.get<CartResponseDTO>("/api/cart");
@@ -123,6 +131,7 @@ export const cartService = {
   },
 };
 
+// User service
 export const userService = {
   update: async (userData: UpdateUserRequestDTO): Promise<UserResponseDTO> => {
     const response = await api.patch<UserResponseDTO>(
@@ -133,6 +142,7 @@ export const userService = {
   },
 };
 
+// Order service
 export const orderService = {
   createOrder: async (data: OrdersRequestDTO): Promise<OrdersResponseDTO> => {
     const response = await api.post<OrdersResponseDTO>("/api/orders", data);
@@ -150,6 +160,7 @@ export const orderService = {
   }
 };
 
+// Payment service
 export const paymentService = {
   createIntent: async (orderId: number): Promise<string> => {
     const response = await api.post<string>(

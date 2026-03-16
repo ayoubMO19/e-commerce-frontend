@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import type { ProductResponseDTO } from "../types/api";
 import { Check, Plus } from "lucide-react";
 import { useCart } from "../hooks/useCart";
-import { notify } from "../utils/notifications";
 
+// ProductCard props interface
 interface ProductCardProps {
   product: ProductResponseDTO;
 }
 
+// ProductCard component
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
 
+  // Handle add to cart
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -20,8 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
     addToCart(product);
     setIsAdded(true);
-    notify.success("¡Producto añadido!");
-    setTimeout(() => setIsAdded(false), 2000);
+    setTimeout(() => setIsAdded(false), 1000);
   };
 
   return (
@@ -82,8 +83,8 @@ export function ProductCard({ product }: ProductCardProps) {
           onClick={handleAddToCart}
           disabled={product.stock === 0 || isAdded}
           className={`w-full flex items-center justify-center gap-2 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[2px] transition-all duration-300 active:scale-95 border ${isAdded
-              ? "bg-black border-vexa/50 text-white"
-              : "bg-black border-transparent text-white hover:bg-zinc-800 disabled:bg-zinc-100 disabled:text-zinc-300 shadow-md shadow-black/5"
+            ? "bg-black border-vexa/50 text-white"
+            : "bg-black border-transparent text-white hover:bg-zinc-800 disabled:bg-zinc-100 disabled:text-zinc-300 shadow-md shadow-black/5"
             }`}
         >
           {isAdded ? (

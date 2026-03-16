@@ -1,3 +1,4 @@
+// Product response
 export interface ProductResponseDTO {
   productId: number;
   name: string;
@@ -9,11 +10,13 @@ export interface ProductResponseDTO {
   categoryName: string;
 }
 
+// Categories response
 export interface CategoriesResponseDTO {
   categoryId: number;
   name: string;
 }
 
+// Cart item interface
 export interface CartItem {
   productId: number;
   name: string;
@@ -23,11 +26,13 @@ export interface CartItem {
   stock: number;
 }
 
+// Login request
 export interface LoginRequestDTO {
   email: string;
   password: string;
 }
 
+// Register request
 export interface RegisterRequestDTO {
   name: string;
   surname: string;
@@ -35,6 +40,7 @@ export interface RegisterRequestDTO {
   password: string;
 }
 
+// User response
 export interface UserResponseDTO {
   userId: number;
   name: string;
@@ -43,11 +49,13 @@ export interface UserResponseDTO {
   hasWelcomeDiscount: boolean;
 }
 
+// Auth response
 export interface AuthResponseDTO {
   token: string;
   user: UserResponseDTO;
 }
 
+// Register response
 export interface RegisterResponseDTO {
   message: string;
   user: UserResponseDTO;
@@ -63,6 +71,7 @@ export interface CartItemDTO {
   stock: number;
 }
 
+// Cart response
 export interface CartResponseDTO {
   userId: number;
   items: CartItemDTO[];
@@ -70,26 +79,31 @@ export interface CartResponseDTO {
   totalPrice: number;
 }
 
+// Cart add request
 export interface CartAddRequestDTO {
   productId: number;
   quantity: number;
 }
 
+// Cart update request
 export interface CartUpdateRequestDTO {
   productId: number;
   quantity: number;
 }
 
+// Cart delete product request
 export interface CartDeleteProductRequestDTO {
   productId: number;
 }
 
+// Update user request
 export interface UpdateUserRequestDTO {
   name?: string;
   surname?: string;
   email?: string;
 }
 
+// User response
 export interface UserResponseDTO {
   userId: number;
   name: string;
@@ -98,10 +112,12 @@ export interface UserResponseDTO {
   hasWelcomeDiscount: boolean;
 }
 
+// Orders request
 export interface OrdersRequestDTO {
   shippingAddress: string;
 }
 
+// Order item
 export interface OrderItemDTO {
   productId: number;
   productName: string;
@@ -109,6 +125,8 @@ export interface OrderItemDTO {
   priceAtPurchase: number;
   imageUrl: string;
 }
+
+// Orders response
 export interface OrdersResponseDTO {
   orderId: number;
   totalPrice: number;
@@ -120,15 +138,18 @@ export interface OrdersResponseDTO {
   items: OrderItemDTO[];
 }
 
+// Payment intent request
 export interface PaymentIntentRequestDTO {
   orderId: number;
 }
 
+// Cart item sync DTO
 export interface CartItemSyncDTO {
   productId: number;
   quantity: number;
 }
 
+// Cart sync request
 export interface CartSyncRequestDTO {
   items: CartItemSyncDTO[];
 }

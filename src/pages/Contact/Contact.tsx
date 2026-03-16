@@ -1,5 +1,6 @@
 import { Phone, Mail, Linkedin, Github } from "lucide-react";
 
+// Contact page
 export default function Contact() {
   return (
     <div className="mx-auto max-w-3xl space-y-12">
@@ -14,7 +15,6 @@ export default function Contact() {
       </header>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        {/* Teléfono */}
         <a
           href="tel:+34631515999"
           className="group flex flex-col items-center gap-4 rounded-xl border border-gray-100 bg-white p-8 text-center shadow-sm transition hover:border-gray-900 hover:shadow-md"
@@ -29,8 +29,6 @@ export default function Contact() {
             </p>
           </div>
         </a>
-
-        {/* Email */}
         <a
           href="mailto:ayoubmorghiouhda@gmail.com"
           className="group flex flex-col items-center gap-4 rounded-xl border border-gray-100 bg-white p-8 text-center shadow-sm transition hover:border-gray-900 hover:shadow-md"
@@ -46,8 +44,6 @@ export default function Contact() {
           </div>
         </a>
       </div>
-
-      {/* Redes sociales */}
       <section className="space-y-6">
         <h2 className="text-center text-lg font-semibold text-gray-900">
           Síguenos en redes sociales

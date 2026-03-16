@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Zap } from "lucide-react";
 
+// Hero component
 export function Hero() {
   return (
     <section className="relative overflow-hidden rounded-[40px] bg-black px-6 py-20 sm:px-12 sm:py-32 lg:px-16">
