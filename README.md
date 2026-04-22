@@ -10,7 +10,7 @@
 
 </div>
 
-**VEXA** es un e-commerce moderno de alto rendimiento construido con un stack tecnológico de vanguardia, enfocado en la escalabilidad, la seguridad en los pagos y una experiencia de usuario fluida.
+**VEXA** es un e-commerce moderno de alto rendimiento construido con un stack tecnológico moderno, enfocado en la escalabilidad, la seguridad en los pagos y una experiencia de usuario fluida.
 
 **[Live Demo](https://e-commerce-frontend-mu-five.vercel.app/)** | **[Backend Repository](https://github.com/ayoubMO19/e-commerce-backend)**
 
