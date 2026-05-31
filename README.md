@@ -10,9 +10,9 @@
 
 </div>
 
-**VEXA** es un e-commerce moderno de alto rendimiento construido con un stack tecnológico moderno, enfocado en la escalabilidad, la seguridad en los pagos y una experiencia de usuario fluida.
+Modern, high-performance e-commerce frontend built with a production-ready tech stack, focused on scalability, secure payments, and a seamless user experience.
 
-**[Live Demo](https://e-commerce-frontend-mu-five.vercel.app/)** | **[Backend Repository](https://github.com/ayoubMO19/e-commerce-backend)**
+👉 **[Live Demo](https://e-commerce-frontend-mu-five.vercel.app/)** | 🖥️ **[Backend Repository](https://github.com/ayoubMO19/e-commerce-backend)**
 
 ---
 
@@ -22,131 +22,91 @@
 
 ---
 
-## 🛠️ Stack Tecnológico
+## 🚀 Tech Stack
 
-- **Frontend Core**: React 19 & TypeScript 5.9
-- **Build Tool**: Vite 7.2 (Optimizado para desarrollo rápido)
-- **Estilos**: TailwindCSS 3.4
-- **Estado Asíncrono**: TanStack Query v5 (Caching y Server State)
-- **Pagos**: Stripe SDK & Elements
-- **Comunicación**: Axios con Interceptores
-- **Navegación**: React Router 7
-- **UI/UX**: Lucide React & Sonner (Notificaciones)
+* React 19
+* TypeScript 5.9
+* Vite 7.2 (Optimized build tool)
+* TailwindCSS 3.4
+* TanStack Query v5 (Server state & caching)
+* Stripe SDK & Elements
+* Axios (with Interceptors)
+* React Router 7
+* Lucide React & Sonner (UI/UX)
 
-## ✨ Características Clave
+---
 
-- **🔐 Autenticación Robusta**: Sistema JWT con persistencia de sesión y protección de rutas.
-- **💳 Pasarela de Pagos Segura**: Integración completa con **Stripe Elements** para el procesamiento de transacciones.
-- **📍 Smart Address Autocomplete**: Buscador de direcciones inteligente mediante la API de Photon/OpenStreetMap con filtrado geográfico.
-- **🛒 Gestión de Carrito**: Sincronización en tiempo real entre el estado local y el backend.
-- **⚡ Performance Optimizada**: Puntuación de 100/100 en Core Web Vitals gracias a Lazy Loading y code-splitting.
-- **📱 Responsive Design**: Interfaz minimalista adaptable a cualquier dispositivo móvil o desktop.
+## ✨ Key Features
 
-## 💳 Checkout & Pagos (Stripe Sandbox)
+### Authentication & Core
 
-El sistema de pagos está implementado bajo los estándares de **PCI Compliance** (los datos sensibles nunca tocan nuestro servidor).
+* **Secure Auth Flow:** JWT-based system with session persistence and protected client-side routing.
+* **Real-time Cart Management:** Seamless synchronization between local state and backend databases.
+* **Responsive Layout:** Minimalist design fully adapted for mobile, tablet, and desktop viewports.
 
-- **Gestión Asíncrona**: Uso de Payment Intents para asegurar la integridad de cada cobro.
-- **Datos para Pruebas**: 
-  - **Tarjeta**: `4242 4242 4242 4242`
-  - **CVC**: Aleatorio | **Fecha**: Cualquiera futura.
+### Advanced Integrations
 
-## 🏗️ Arquitectura y Buenas Prácticas
+* **PCI-Compliant Checkout:** Full integration with **Stripe Elements** ensuring sensitive card details never touch our servers.
+* **Smart Address Autocomplete:** Geographically-filtered intelligent address lookup powered by Photon/OpenStreetMap API.
+* **Performance-First Engine:** Achieved a **100/100 Real Experience Score** on Vercel Speed Insights via lazy loading and code-splitting.
 
-VEXA implementa una arquitectura modular diseñada para el mantenimiento a largo plazo:
+---
 
-- **Custom Hooks**: Lógica de negocio desacoplada de los componentes (`useAuth`, `useCart`, `useStripePayment`).
-- **Data Fetching**: Gestión eficiente de estados asíncronos y caché con **TanStack Query**.
-- **Type Safety**: Tipado estático riguroso en toda la aplicación para minimizar errores en runtime.
-- **Resilient UI**: Sistema diseñado para manejar fallos de APIs externas de forma elegante (Graceful Degradation).
+## 🏗️ Architecture & Best Practices
 
-## 🚀 Guía de Inicio Rápido
+The project implements a clean, modular frontend architecture designed for long-term maintainability:
 
-### Prerrequisitos
-- Node.js 18+
-- npm o yarn
+* **Decoupled Logic:** Pure business logic is isolated into custom React hooks (`useAuth`, `useCart`, `useStripePayment`).
+* **Efficient Data Fetching:** Asynchronous states and API caching are completely managed via **TanStack Query**.
+* **Strict Type Safety:** Rigorous static typing across all components to eliminate runtime errors.
+* **Resilient UI:** Graceful degradation patterns implemented to handle external API failures smoothly.
 
-### Instalación
+---
 
-1. **Clonar y acceder**
+## 💳 Testing Payments (Stripe Sandbox)
+
+The payment flow handles transactions asynchronously using Payment Intents to secure financial integrity.
+
+* **Test Card:** `4242 4242 4242 4242`
+* **CVC:** Any random 3 digits | **Expiry:** Any future date.
+
+---
+
+## ▶️ Quick Start
+
+### Prerequisites
+
+* Node.js 18+
+* npm / yarn
+
+### Installation
+
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/ayoubMO19/e-commerce-frontend.git
+   git clone [https://github.com/ayoubMO19/e-commerce-frontend.git](https://github.com/ayoubMO19/e-commerce-frontend.git)
    cd e-commerce-frontend
-   
-2. **Instalar dependencias**
+   ```
+
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Configurar variables de entorno**
+3. **Set up environment variables:**
    ```bash
    cp .env.example .env
    ```
+   *Configure your `VITE_API_BASE_URL` inside the `.env` file.*
 
-4. **Iniciar servidor de desarrollo**
+4. **Run the development server:**
    ```bash
    npm run dev
    ```
 
-5. **Abrir navegador** en `http://localhost:5173`
-
-### Scripts disponibles
-
-```bash
-npm run dev      # Servidor de desarrollo
-npm run build    # Build para producción
-npm run preview  # Preview del build
-npm run lint     # Linting con ESLint
-```
-
-## 🎯 Performance
-
-VEXA alcanza un **Real Experience Score de 100/100** en Vercel Speed Insights gracias a:
-
-- Lazy loading de componentes
-- Optimización de bundle con Vite
-- Imágenes optimizadas
-- Mínimo JavaScript crítico
-- CSS utility-first con Tailwind
-
-## 🔧 Configuración
-
-### Estado de la API
-Actualmente, el frontend está configurado para conectar directamente con la instancia de producción en Render. 
-Como se puede ver en el archivo `.env`:
-```bash
-VITE_API_BASE_URL="Tu URL de la API"
-```
-
-### API Endpoints
-
-El frontend se conecta al backend Spring Boot a través de:
-
-- **Autenticación**: `/api/auth/*`
-- **Productos**: `/api/products/*`
-- **Categorías**: `/api/categories/*`
-- **Carrito**: `/api/cart/*`
-- **Usuarios**: `/api/users/*`
-
-## 🤝 Contribución
-
-1. Fork del proyecto
-2. Feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit (`git commit -m 'Add amazing feature'`)
-4. Push (`git push origin feature/amazing-feature`)
-5. Pull Request
-
-## 🗺️ Roadmap (Próximamente)
-
-- [x] Integración de Stripe (Modo Test)
-- [ ] Implementación de Webhooks para confirmación de pedidos
-- [ ] Panel de Administración para gestión de inventario
-- [ ] Generación de facturas dinámicas en PDF
-
-## 📄 Licencia
-
-MIT License - ver archivo [LICENSE](LICENSE) para detalles.
-
 ---
 
-**Desarrollado con enfoque en calidad técnica y mejores prácticas por [Ayoub Morghi Ouhda](https://www.linkedin.com/in/ayoub-morghi-ouhda/)**
+## 👨‍💻 Author
+
+**Ayoub Morghi Ouhda**
+
+Full Stack Developer | Node.js · TypeScript · React · Java · SQL/NoSQL
