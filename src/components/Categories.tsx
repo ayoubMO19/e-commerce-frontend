@@ -10,7 +10,7 @@ export function Categories() {
   return (
     <section className="py-8">
       <div className="flex items-center gap-3 mb-8">
-        <div className="h-[1px] w-8 bg-vexa"></div>
+        <div className="h-[1px] w-8 bg-brand"></div>
         <h2 className="text-[10px] font-black uppercase tracking-[4px] text-zinc-400">
           Explorar Categorías
         </h2>
@@ -27,7 +27,7 @@ export function Categories() {
               to="/products"
               className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${!currentCategory
                 ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
-                : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
+                : "bg-white border-zinc-100 text-zinc-500 hover:border-brand hover:text-black"
                 }`}
             >
               Todas
@@ -39,7 +39,7 @@ export function Categories() {
                 to={`/products?category=${category.categoryId}`}
                 className={`rounded-xl px-6 py-3 text-[10px] font-black uppercase tracking-widest transition-all border ${currentCategory === String(category.categoryId)
                   ? "bg-black text-white border-black shadow-lg shadow-zinc-200"
-                  : "bg-white border-zinc-100 text-zinc-500 hover:border-vexa hover:text-black"
+                  : "bg-white border-zinc-100 text-zinc-500 hover:border-brand hover:text-black"
                   }`}
               >
                 {category.name}

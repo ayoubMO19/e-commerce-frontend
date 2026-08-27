@@ -13,11 +13,11 @@ export default {
         background: "#ffffff",
         muted: "#f5f5f5",
         accent: "#111111",
-        // Definimos color personalizado
-        vexa: {
-          DEFAULT: '#6FDE8A',
-          neon: '#6FDE8A',
-          dark: '#5bc276',
+        // Color de marca: rojo taller
+        brand: {
+          DEFAULT: '#dc2626',
+          light: '#ef4444',
+          dark: '#991b1b',
         }
       },
       borderRadius: {

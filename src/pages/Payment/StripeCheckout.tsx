@@ -40,7 +40,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
   const appearance: Appearance = {
     theme: 'flat',
     variables: {
-      colorPrimary: '#000000',
+      colorPrimary: '#dc2626',
       colorBackground: '#f4f4f5',
       colorText: '#000000',
       borderRadius: '20px',
@@ -61,7 +61,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
       <div className="w-full max-w-md bg-white p-8 rounded-[32px] border border-zinc-100 shadow-sm">
         <div className="text-center mb-10">
           <div className="bg-black text-white w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl mx-auto mb-4">
-            V
+            M
           </div>
           <h1 className="text-3xl font-black uppercase tracking-tighter">Finalizar Pago</h1>
           <p className="text-zinc-400 text-[10px] font-black uppercase tracking-[3px] mt-2">
@@ -74,7 +74,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ orderId }) => {
           </Elements>
         ) : (
           <div className="flex flex-col items-center justify-center py-20 space-y-4">
-            <div className="w-8 h-8 border-4 border-zinc-200 border-t-black rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-zinc-200 border-t-brand rounded-full animate-spin"></div>
             <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
               Conectando con Stripe...
             </p>

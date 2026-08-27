@@ -21,7 +21,7 @@ export default function Home() {
             <p className="text-sm font-medium uppercase tracking-widest">Cargando...</p>
           </div>
         ) : isError ? (
-          <div className="flex items-center justify-center gap-2 py-12 text-red-500">
+          <div className="flex items-center justify-center gap-2 py-12 text-red-600">
             <AlertCircle className="h-5 w-5" />
             <p className="text-sm font-medium">No se han podido cargar los productos.</p>
           </div>

@@ -80,7 +80,7 @@ const CheckoutPage: React.FC = () => {
                   />
                   <div className="flex-1">
                     <h4 className="text-[11px] font-black uppercase tracking-tight leading-none">{item.name}</h4>
-                    <p className="text-[10px] text-zinc-400 font-bold uppercase mt-1 italic">Vexa Line</p>
+                    <p className="text-[10px] text-zinc-400 font-bold uppercase mt-1">Cant. {item.quantity}</p>
                   </div>
                   <span className="text-sm font-black italic">{item.total.toFixed(2)}€</span>
                 </div>
@@ -104,9 +104,9 @@ const CheckoutPage: React.FC = () => {
               <button
                 onClick={handleCreateOrder}
                 disabled={isLoading || !isAddressValid}
-                className="w-full bg-black text-white py-6 rounded-[24px] font-black uppercase tracking-[3px] text-xs hover:bg-zinc-800 transition-all disabled:bg-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed shadow-xl shadow-black/5"
+                className="w-full bg-brand text-white py-6 rounded-[24px] font-black uppercase tracking-[3px] text-xs hover:bg-brand-dark transition-all disabled:bg-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed shadow-xl shadow-black/5"
               >
-                {isLoading ? "Validando Datos..." : "Pagar Ahora"}
+                {isLoading ? "Procesando..." : "Pagar Ahora"}
               </button>
 
               {!isAddressValid && (
@@ -118,7 +118,7 @@ const CheckoutPage: React.FC = () => {
           </div>
           <div className="flex items-center justify-center gap-2 text-zinc-400 px-4">
             <div className="h-[1px] flex-1 bg-zinc-100"></div>
-            <span className="text-[8px] font-black uppercase tracking-widest">Secure Checkout</span>
+            <span className="text-[8px] font-black uppercase tracking-widest">Pago Seguro</span>
             <div className="h-[1px] flex-1 bg-zinc-100"></div>
           </div>
         </div>

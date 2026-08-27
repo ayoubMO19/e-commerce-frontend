@@ -52,8 +52,8 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-4">
-        <p className="text-gray-500">Producto no encontrado</p>
-        <Link to="/products" className="font-bold text-black underline">Volver a la tienda</Link>
+        <p className="text-zinc-500">Producto no encontrado</p>
+        <Link to="/products" className="font-bold text-black underline decoration-brand/40">Volver a la tienda</Link>
       </div>
     );
   }
@@ -63,13 +63,13 @@ export default function ProductDetail() {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <button
         onClick={() => navigate(-1)}
-        className="mb-8 flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-black"
+        className="mb-8 flex items-center gap-2 text-sm font-medium text-zinc-500 transition-colors hover:text-black"
       >
         <ArrowLeft className="h-4 w-4" />
         Volver
       </button>
       <div className="grid gap-12 lg:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+        <div className="relative aspect-square overflow-hidden rounded-3xl border border-zinc-100 bg-white shadow-sm">
           <img
             src={product.urlImage}
             alt={product.name}
@@ -83,20 +83,20 @@ export default function ProductDetail() {
         </div>
         <div className="flex flex-col justify-center space-y-8">
           <header className="space-y-4">
-            <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-gray-500">
+            <span className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
               {product.categoryName}
             </span>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 lg:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-zinc-900 lg:text-5xl">
               {product.name}
             </h1>
-            <p className="text-3xl font-light text-gray-900">
+            <p className="text-3xl font-light text-zinc-900">
               {product.price.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
             </p>
           </header>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Descripción</h3>
-            <p className="leading-relaxed text-gray-600">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-900">Descripción</h3>
+            <p className="leading-relaxed text-zinc-600">
               {product.description || "Sin descripción disponible para este producto."}
             </p>
           </div>
@@ -104,7 +104,7 @@ export default function ProductDetail() {
             <button
               onClick={handleAddToCart}
               disabled={isAdding || product.stock === 0}
-              className="flex w-full items-center justify-center gap-3 rounded-2xl bg-black py-5 text-sm font-bold text-white transition-all hover:bg-gray-800 active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-500"
+              className="flex w-full items-center justify-center gap-3 rounded-2xl bg-black py-5 text-sm font-bold text-white transition-all hover:bg-zinc-800 active:scale-[0.98] disabled:bg-zinc-200 disabled:text-zinc-500 border border-transparent hover:border-brand/30"
             >
               {product.stock === 0 ? (
                 "Sin Stock"
@@ -112,24 +112,24 @@ export default function ProductDetail() {
                 "Añadiendo..."
               ) : (
                 <>
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-5 w-5 text-brand" />
                   Añadir al carrito
                 </>
               )}
             </button>
           </div>
           <div className="grid grid-cols-1 gap-4 pt-8 sm:grid-cols-3">
-            <div className="flex items-center gap-3 text-gray-500">
-              <Truck className="h-5 w-5 text-black" />
+            <div className="flex items-center gap-3 text-zinc-500">
+              <Truck className="h-5 w-5 text-brand" />
               <span className="text-xs font-medium">Envío Gratis</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-500">
-              <RotateCcw className="h-5 w-5 text-black" />
+            <div className="flex items-center gap-3 text-zinc-500">
+              <RotateCcw className="h-5 w-5 text-brand" />
               <span className="text-xs font-medium">30 días devolución</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-500">
-              <ShieldCheck className="h-5 w-5 text-black" />
-              <span className="text-xs font-medium">Garantía VEXA</span>
+            <div className="flex items-center gap-3 text-zinc-500">
+              <ShieldCheck className="h-5 w-5 text-brand" />
+              <span className="text-xs font-medium">Garantía MOTORPART</span>
             </div>
           </div>
         </div>

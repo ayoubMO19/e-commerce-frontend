@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   ShoppingCart, User, Package, Settings, LogOut,
-  ChevronDown, Zap
+  ChevronDown, Wrench
 } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 // Navigation link base styles
 const navLinkBase = "relative text-[10px] font-black uppercase tracking-[2px] text-zinc-500 transition-all duration-300 hover:text-black";
 // Navigation link active styles
-const navLinkActive = "text-black after:content-[''] after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-[2px] after:bg-vexa after:shadow-[0_0_8px_theme(colors.vexa.DEFAULT)]";
+const navLinkActive = "text-black after:content-[''] after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-[2px] after:bg-brand after:shadow-[0_0_8px_theme(colors.brand.DEFAULT)]";
 
 // Navbar component
 export function Navbar() {
@@ -31,12 +31,12 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-0">
 
         <NavLink to="/" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-100 bg-black shadow-sm transition-all duration-500 group-hover:border-vexa/50 group-hover:shadow-[0_0_20px_rgba(111,222,138,0.3)]">
-            <Zap className="h-5 w-5 text-vexa fill-vexa transition-all duration-500 group-hover:scale-110 group-hover:rotate-12" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-100 bg-black shadow-sm transition-all duration-500 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(220,38,38,0.3)]">
+            <Wrench className="h-5 w-5 text-brand transition-all duration-500 group-hover:scale-110 group-hover:rotate-12" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-xl font-black tracking-tighter text-black uppercase italic">VEXA</span>
-            <span className="text-[7px] font-black tracking-[3px] text-vexa uppercase ml-0.5">Studio</span>
+            <span className="text-xl font-black tracking-tighter text-black uppercase italic">MOTORPART</span>
+            <span className="text-[7px] font-black tracking-[3px] text-brand uppercase ml-0.5">Recambios</span>
           </div>
         </NavLink>
 
@@ -54,7 +54,7 @@ export function Navbar() {
           >
             <ShoppingCart className="h-5 w-5 stroke-[1.5px]" />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-vexa px-1 text-[10px] font-black text-black ring-4 ring-white shadow-[0_0_10px_theme(colors.vexa.DEFAULT)]">
+              <span className="absolute -top-1 -right-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-brand px-1 text-[10px] font-black text-white ring-4 ring-white shadow-[0_0_10px_theme(colors.brand.DEFAULT)]">
                 {cartCount}
               </span>
             )}
@@ -73,14 +73,14 @@ export function Navbar() {
                   <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400 group-hover:text-black transition-colors leading-none">
                     {user?.name?.split(' ')[0]}
                   </span>
-                  <ChevronDown size={10} className={`mt-1 text-zinc-300 transition-transform duration-500 ${isMenuOpen ? "rotate-180 text-vexa" : ""}`} />
+                  <ChevronDown size={10} className={`mt-1 text-zinc-300 transition-transform duration-500 ${isMenuOpen ? "rotate-180 text-brand" : ""}`} />
                 </div>
 
                 <div className="relative">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white shadow-lg transition-all duration-300 group-hover:scale-105">
                     <User className="h-4 w-4" />
                   </div>
-                  <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-vexa shadow-[0_0_8px_theme(colors.vexa.DEFAULT)]" />
+                  <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-brand shadow-[0_0_8px_theme(colors.brand.DEFAULT)]" />
                 </div>
               </button>
 
@@ -88,11 +88,11 @@ export function Navbar() {
                 <div className="absolute right-0 top-full w-52 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="overflow-hidden rounded-[28px] border border-zinc-100 bg-white/95 backdrop-blur-md p-2 shadow-2xl shadow-black/5">
                     <NavLink to="/profile" onClick={() => setIsMenuOpen(false)} className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[9px] font-black uppercase tracking-widest text-zinc-500 transition-all hover:bg-zinc-50 hover:text-black">
-                      <Settings size={14} className="group-hover:rotate-45 transition-transform text-zinc-400 group-hover:text-vexa" />
+                      <Settings size={14} className="group-hover:rotate-45 transition-transform text-zinc-400 group-hover:text-brand" />
                       Mi Perfil
                     </NavLink>
                     <NavLink to="/my-orders" onClick={() => setIsMenuOpen(false)} className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[9px] font-black uppercase tracking-widest text-zinc-500 transition-all hover:bg-zinc-50 hover:text-black">
-                      <Package size={14} className="text-zinc-400 group-hover:text-vexa" />
+                      <Package size={14} className="text-zinc-400 group-hover:text-brand" />
                       Mis Pedidos
                     </NavLink>
                     <div className="my-2 h-[1px] bg-zinc-50" />
@@ -107,9 +107,9 @@ export function Navbar() {
           ) : (
             <NavLink
               to="/login"
-              className="flex h-11 items-center gap-3 rounded-full bg-black px-8 text-[10px] font-black uppercase tracking-widest text-white transition-all hover:shadow-[0_10px_20px_rgba(111,222,138,0.15)] hover:scale-[1.02] active:scale-95 border border-transparent hover:border-vexa/30"
+              className="flex h-11 items-center gap-3 rounded-full bg-black px-8 text-[10px] font-black uppercase tracking-widest text-white transition-all hover:shadow-[0_10px_20px_rgba(220,38,38,0.15)] hover:scale-[1.02] active:scale-95 border border-transparent hover:border-brand/30"
             >
-              <Zap className="h-4 w-4 text-vexa fill-vexa" />
+              <Wrench className="h-4 w-4 text-brand" />
               <span>Acceder</span>
             </NavLink>
           )}

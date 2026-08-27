@@ -17,7 +17,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
     <section className="space-y-10 py-10">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-black uppercase tracking-tighter text-black italic">
-          Productos <span className="text-zinc-300">Destacados</span>
+          Recambios <span className="text-zinc-300">Destacados</span>
         </h2>
         <div className="h-[1px] flex-1 mx-8 bg-zinc-100 hidden md:block"></div>
       </div>
@@ -34,7 +34,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
           className="group flex items-center gap-3 rounded-full border-2 border-black bg-white px-10 py-4 text-[10px] font-black uppercase tracking-[2px] text-black transition-all hover:bg-black hover:text-white"
         >
           Explorar catálogo completo
-          <ArrowRight className="h-4 w-4 text-vexa" />
+          <ArrowRight className="h-4 w-4 text-brand group-hover:text-white" />
         </Link>
       </div>
     </section>

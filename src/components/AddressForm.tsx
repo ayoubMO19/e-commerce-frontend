@@ -94,7 +94,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
   return (
     <div className="space-y-6">
       <div className="relative space-y-2">
-        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Street / Main Road</label>
+        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Calle / Vía principal</label>
         <input
           type="text"
           value={query}
@@ -105,8 +105,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
             searchAddress(val);
             setShowDropdown(true);
           }}
-          placeholder="Search or type address..."
-          className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-black focus:bg-white transition-all"
+          placeholder="Busca o escribe tu dirección..."
+          className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/5 transition-all"
         />
 
         {showDropdown && suggestions.length > 0 && (
@@ -120,7 +120,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
               >
                 <p className="text-[11px] font-black uppercase">{s.properties.street || s.properties.name}</p>
                 <p className="text-[9px] text-zinc-400 font-bold uppercase">
-                  {s.properties.city ? `${s.properties.city}, ` : ''} Spain
+                  {s.properties.city ? `${s.properties.city}, ` : ''}España
                 </p>
               </button>
             ))}
@@ -130,56 +130,56 @@ export const AddressForm: React.FC<AddressFormProps> = ({ onAddressChange }) => 
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Number *</label>
+          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Número *</label>
           <input
             type="text"
             value={details.number}
             onChange={(e) => setDetails({ ...details, number: e.target.value })}
             placeholder="15"
-            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-black focus:bg-white transition-all"
+            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/5 transition-all"
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Floor / Door</label>
+          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Piso / Puerta</label>
           <input
             type="text"
             value={details.floor}
             onChange={(e) => setDetails({ ...details, floor: e.target.value })}
             placeholder="3º B"
-            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-black focus:bg-white transition-all"
+            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/5 transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Postcode *</label>
+          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Código postal *</label>
           <input
             type="text"
             value={details.postcode}
             onChange={(e) => setDetails({ ...details, postcode: e.target.value })}
-            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-black focus:bg-white transition-all"
+            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/5 transition-all"
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">City *</label>
+          <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Ciudad *</label>
           <input
             type="text"
             value={details.city}
             onChange={(e) => setDetails({ ...details, city: e.target.value })}
-            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-black focus:bg-white transition-all"
+            className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] text-sm font-bold focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/5 transition-all"
           />
         </div>
       </div>
 
       <div className="p-5 bg-zinc-50 border border-zinc-100 rounded-[24px] space-y-1">
-        <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Address Confirmation:</p>
+        <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Confirmación de dirección:</p>
         <p className="text-xs font-black uppercase italic">
-          {details.street ? `${details.street} ${details.number}` : 'Awaiting data...'}
+          {details.street ? `${details.street} ${details.number}` : 'Esperando datos...'}
         </p>
         {details.city && (
           <p className="text-[10px] text-zinc-400 font-bold uppercase">
-            {details.postcode} {details.city}, Spain {details.floor && `• ${details.floor}`}
+            {details.postcode} {details.city}, España {details.floor && `• ${details.floor}`}
           </p>
         )}
       </div>

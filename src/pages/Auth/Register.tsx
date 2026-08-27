@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, User, UserCircle, AlertCircle, Zap, Eye, EyeOff, CheckCircle2, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, UserCircle, AlertCircle, Wrench, Eye, EyeOff, CheckCircle2, ArrowRight } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import type { RegisterRequestDTO } from "../../types/api";
 
@@ -63,9 +63,9 @@ export default function Register() {
       <div className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-2xl items-center px-4 animate-in fade-in zoom-in duration-500">
         <div className="w-full space-y-10 rounded-[3rem] border border-zinc-100 bg-white p-12 md:p-20 text-center shadow-2xl shadow-black/5">
           <div className="relative mx-auto flex h-24 w-24 items-center justify-center">
-            <div className="absolute inset-0 animate-ping rounded-full bg-vexa opacity-10" />
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-[2rem] bg-zinc-50 text-vexa">
-              <CheckCircle2 className="h-10 w-10 shadow-[0_0_20px_rgba(111,222,138,0.4)]" />
+            <div className="absolute inset-0 animate-ping rounded-full bg-brand opacity-10" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-[2rem] bg-zinc-50 text-brand">
+              <CheckCircle2 className="h-10 w-10 shadow-[0_0_20px_rgba(220,38,38,0.4)]" />
             </div>
           </div>
 
@@ -73,7 +73,7 @@ export default function Register() {
             <h2 className="text-4xl font-black uppercase tracking-tighter italic">Verifica tu email</h2>
             <p className="mx-auto max-w-sm text-[10px] font-bold uppercase tracking-widest text-zinc-500 leading-relaxed">
               Hemos enviado un enlace de activación a <br />
-              <span className="text-black underline decoration-vexa decoration-2 underline-offset-4">
+              <span className="text-black underline decoration-brand decoration-2 underline-offset-4">
                 {formData.email}
               </span>
             </p>
@@ -89,10 +89,10 @@ export default function Register() {
           <div className="pt-6">
             <Link
               to="/login"
-              className="group inline-flex items-center gap-3 rounded-full bg-black px-10 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:scale-105 active:scale-95 border border-transparent hover:border-vexa/30"
+              className="group inline-flex items-center gap-3 rounded-full bg-black px-10 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:scale-105 active:scale-95 border border-transparent hover:border-brand/30"
             >
               Ir al inicio de sesión
-              <ArrowRight className="h-4 w-4 text-vexa transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 text-brand transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
@@ -106,11 +106,11 @@ export default function Register() {
       <div className="w-full space-y-10 py-10">
         <header className="space-y-4 text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-black shadow-xl transition-transform hover:scale-110 duration-500">
-            <Zap className="h-7 w-7 text-vexa fill-vexa" />
+            <Wrench className="h-7 w-7 text-brand" />
           </div>
           <div className="space-y-1">
-            <h1 className="text-4xl font-black tracking-tighter text-black uppercase italic">Vexa Join</h1>
-            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-vexa opacity-80">Crea tu cuenta de cliente</p>
+            <h1 className="text-4xl font-black tracking-tighter text-black uppercase italic">Únete</h1>
+            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-brand opacity-80">Crea tu cuenta de cliente</p>
           </div>
         </header>
 
@@ -127,30 +127,30 @@ export default function Register() {
               <div className="space-y-2">
                 <label className="ml-1 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Nombre</label>
                 <div className="relative group">
-                  <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-vexa transition-colors" />
+                  <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" />
                   <input
                     type="text"
                     name="name"
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-vexa/50 focus:ring-4 focus:ring-vexa/5"
-                    placeholder="First Name"
+                    className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-brand/50 focus:ring-4 focus:ring-brand/5"
+                    placeholder="Nombre"
                   />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="ml-1 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Apellido</label>
                 <div className="relative group">
-                  <UserCircle className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-vexa transition-colors" />
+                  <UserCircle className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" />
                   <input
                     type="text"
                     name="surname"
                     required
                     value={formData.surname}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-vexa/50 focus:ring-4 focus:ring-vexa/5"
-                    placeholder="Last Name"
+                    className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-brand/50 focus:ring-4 focus:ring-brand/5"
+                    placeholder="Apellido"
                   />
                 </div>
               </div>
@@ -159,15 +159,15 @@ export default function Register() {
             <div className="space-y-2">
               <label className="ml-1 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Email</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-vexa transition-colors" />
+                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" />
                 <input
                   type="email"
                   name="email"
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-vexa/50 focus:ring-4 focus:ring-vexa/5"
-                  placeholder="name@domain.com"
+                  className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-4 text-xs font-bold outline-none transition-all focus:border-brand/50 focus:ring-4 focus:ring-brand/5"
+                  placeholder="nombre@dominio.com"
                 />
               </div>
             </div>
@@ -175,14 +175,14 @@ export default function Register() {
             <div className="space-y-2">
               <label className="ml-1 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Contraseña Segura</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-vexa transition-colors" />
+                <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" />
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-12 text-xs font-bold outline-none transition-all focus:border-vexa/50 focus:ring-4 focus:ring-vexa/5"
+                  className="w-full rounded-2xl border border-zinc-100 bg-white py-4 pl-12 pr-12 text-xs font-bold outline-none transition-all focus:border-brand/50 focus:ring-4 focus:ring-brand/5"
                   placeholder="Mín. 6 caracteres"
                 />
                 <button
@@ -199,17 +199,17 @@ export default function Register() {
           <button
             type="submit"
             disabled={isLoading}
-            className="group relative w-full overflow-hidden rounded-2xl bg-black py-5 text-[10px] font-black uppercase tracking-[0.3em] text-white shadow-2xl transition-all hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-50 border border-transparent hover:border-vexa/30"
+            className="group relative w-full overflow-hidden rounded-2xl bg-black py-5 text-[10px] font-black uppercase tracking-[0.3em] text-white shadow-2xl transition-all hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-50 border border-transparent hover:border-brand/30"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-3">
-                <div className="h-3 w-3 animate-spin rounded-full border-2 border-vexa/20 border-t-vexa" />
-                Validating
+                <div className="h-3 w-3 animate-spin rounded-full border-2 border-brand/20 border-t-brand" />
+                Creando cuenta
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                Unirse a VEXA
-                <ArrowRight className="h-4 w-4 text-vexa transition-transform group-hover:translate-x-1" />
+                Unirse a MOTORPART
+                <ArrowRight className="h-4 w-4 text-brand transition-transform group-hover:translate-x-1" />
               </span>
             )}
           </button>
@@ -218,7 +218,7 @@ export default function Register() {
         <footer className="text-center pt-4">
           <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">
             ¿Ya tienes cuenta?{" "}
-            <Link to="/login" className="text-black hover:text-vexa transition-colors underline underline-offset-8 decoration-vexa/30 decoration-2">
+            <Link to="/login" className="text-black hover:text-brand transition-colors underline underline-offset-8 decoration-brand/30 decoration-2">
               Acceder ahora
             </Link>
           </p>
